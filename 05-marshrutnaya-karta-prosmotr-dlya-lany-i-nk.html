@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Маршрутная карта — просмотр вариантов (для команды)</title>
+<meta name="theme-color" content="#6E2C4D">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%236E2C4D'/%3E%3Ccircle cx='12' cy='11' r='5' fill='%23E7B7B5'/%3E%3C/svg%3E">
+<style>
+:root{
+  --beige:#FCFAF6; --beige2:#F4EAD2;
+  --rose-bg:#FBF1EF; --rose:#E7B7B5; --rose-line:#E4D5D2; --rose-deep:#C97B84;
+  --bordeaux:#6E2C4D; --bordeaux-dark:#4E1E37;
+  --sage:#6E8E7B; --sage-bg:#E9F0EB;
+  --gold:#C29A4B;
+  --ink:#3A2E33; --muted:#6A5A60;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--beige); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased;
+}
+.protoflag{background:var(--bordeaux-dark);color:#fff;font-size:12.5px;text-align:center;padding:7px 14px;line-height:1.4}
+.wrap{max-width:780px;margin:0 auto;padding:0 18px 60px}
+
+/* ---------- шапка ---------- */
+.top{display:flex;align-items:center;gap:11px;justify-content:center;padding:24px 0 4px}
+.mark{width:26px;height:26px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 32% 30%, var(--rose) 0%, var(--rose-deep) 55%, var(--bordeaux) 100%)}
+.brandname{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--bordeaux);font-weight:700}
+
+.hero{text-align:center;padding:18px 0 4px}
+h1{font-size:31px;line-height:1.2;margin:0 0 6px;color:var(--bordeaux-dark);font-weight:700;letter-spacing:-.01em}
+.hero .grp{font-size:19px;color:var(--rose-deep);font-weight:650;margin:0 0 10px}
+.hero .lead{font-size:17px;color:var(--muted);margin:0}
+
+.actions{display:flex;gap:10px;justify-content:center;margin:22px 0 4px;flex-wrap:wrap}
+.pbtn{
+  border:0;cursor:pointer;font:inherit;font-weight:650;font-size:16px;
+  background:var(--bordeaux);color:#fff;padding:14px 24px;border-radius:11px;
+  transition:background .18s ease;
+}
+.pbtn:hover{background:var(--bordeaux-dark)}
+.pbtn.ghost{background:transparent;color:var(--bordeaux);border:1.5px solid var(--rose-line)}
+.pbtn.ghost:hover{background:var(--rose-bg)}
+.printhint{text-align:center;font-size:13.5px;color:var(--muted);margin:10px 0 0}
+
+/* ---------- секции ---------- */
+.sec{
+  background:#fff;border:1px solid var(--rose-line);border-radius:16px;
+  padding:28px 30px;margin-top:20px;box-shadow:0 1px 2px rgba(78,30,55,.04),0 8px 22px rgba(78,30,55,.05);
+}
+.kicker{font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);font-weight:700;margin-bottom:8px}
+h2{font-size:23px;line-height:1.25;margin:0 0 14px;color:var(--bordeaux-dark);font-weight:700}
+h3{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bordeaux);font-weight:700;margin:26px 0 10px}
+p{margin:0 0 12px}
+.small{font-size:14.5px;color:var(--muted)}
+
+.mirror{background:var(--rose-bg);border-left:4px solid var(--rose-deep);padding:18px 20px;
+  border-radius:0 12px 12px 0;font-size:17.5px;margin:0 0 20px}
+
+/* персональная плашка «вы отметили» */
+.you{background:var(--sage-bg);border:1px solid #CFDDD3;border-radius:12px;padding:18px 20px;margin:0 0 8px}
+.you b{display:block;color:var(--sage);font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:9px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{background:#fff;border:1px solid #CFDDD3;border-radius:99px;padding:5px 13px;font-size:15px;color:var(--ink)}
+.chip.warn{background:#FDF8EF;border-color:var(--gold);color:#8a6d1f}
+
+.numlist{counter-reset:n;list-style:none;padding:0;margin:0}
+.numlist li{counter-increment:n;position:relative;padding-left:38px;margin-bottom:13px;font-size:16.5px}
+.numlist li::before{content:counter(n);position:absolute;left:0;top:1px;width:25px;height:25px;border-radius:50%;
+  background:var(--bordeaux);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+/* ---------- коридор ---------- */
+.corridor{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:12px}
+.col{border-radius:12px;overflow:hidden;border:1px solid var(--rose-line)}
+.col .head{padding:11px 13px;font-size:14.5px;font-weight:700;line-height:1.25;color:#fff}
+.col.yes .head{background:var(--sage)} .col.care .head{background:var(--gold)} .col.doc .head{background:var(--bordeaux)}
+.col.yes{background:#F5F9F6} .col.care{background:#FDF8EF} .col.doc{background:#FCF3F5}
+.col ul{margin:0;padding:13px 14px 14px 28px;font-size:15px;line-height:1.42}
+.col li{margin-bottom:8px} .col li:last-child{margin-bottom:0}
+
+.note{border-radius:12px;padding:18px 20px;margin-top:18px;font-size:16px;line-height:1.5}
+.note.gold{background:#FDF8EF;border:1.5px solid var(--gold);color:#6b4e12}
+.note.rose{background:#FCF3F5;border:1.5px solid var(--rose-deep);color:var(--bordeaux-dark)}
+.note.plain{background:var(--rose-bg);border:1.5px solid var(--rose-line);color:var(--ink)}
+.note b{display:block;margin-bottom:6px;font-size:16px}
+
+/* ---------- действия ---------- */
+.act{border:1px solid var(--rose-line);border-radius:12px;padding:18px 20px;margin-bottom:12px;background:var(--beige)}
+.act .r{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.act .n{width:26px;height:26px;border-radius:50%;background:var(--bordeaux);color:#fff;flex:none;
+  font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.act .name{font-size:17.5px;font-weight:700;color:var(--bordeaux-dark)}
+.act .when{margin-left:auto;font-size:14px;color:var(--sage);font-weight:700}
+.act .how{font-size:16px;margin:0 0 10px;padding-left:38px}
+.act .miss{font-size:15px;color:var(--muted);padding-left:38px;border-top:1px dashed var(--rose-line);padding-top:9px}
+.act .miss b{color:var(--rose-deep)}
+
+/* ---------- поля и таблицы ---------- */
+.fill{margin-top:14px}
+.fill .lbl{font-size:15px;color:var(--muted);margin-bottom:5px}
+.line{border-bottom:1px solid var(--rose);height:30px}
+.line + .line{margin-top:4px}
+
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid var(--rose-line);padding:8px 5px;text-align:center;font-size:14px}
+th{background:var(--bordeaux);color:#fff;font-weight:600;font-size:13px;line-height:1.25}
+td.day{background:var(--rose-bg);font-weight:700;color:var(--bordeaux);width:44px}
+tr.week td{background:var(--sage-bg);color:var(--sage);font-weight:700;text-align:left;padding-left:12px;font-size:13.5px}
+.legend{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:12px;font-size:15px;color:var(--muted)}
+.legend b{color:var(--bordeaux);display:block;font-size:15.5px}
+
+table.next td{text-align:left;vertical-align:top;font-size:16px;padding:13px 14px}
+table.next td:first-child{width:38%;font-weight:700;color:var(--bordeaux-dark);background:var(--rose-bg)}
+
+.disclaim{margin-top:20px;font-size:14px;color:var(--muted);line-height:1.5;
+  background:var(--beige2);border-radius:10px;padding:16px 18px}
+
+.goal{background:var(--rose-bg);border:1px solid var(--rose-line);border-radius:12px;padding:18px 20px;margin-top:18px}
+.goal b{color:var(--bordeaux);display:block;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}
+.goal span{font-size:18px;font-weight:650;color:var(--bordeaux-dark)}
+
+.demo{background:#FDF8EF;border:1.5px solid var(--gold);border-radius:12px;padding:16px 18px;margin-top:18px;font-size:15.5px;color:#6b4e12}
+
+
+/* ---------- панель просмотра для команды ---------- */
+.pnl{background:#4E1E37;color:#fff;border-radius:14px;padding:16px 18px;margin-top:18px}
+.pnl-head{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#E7B7B5;font-weight:700;margin-bottom:12px}
+.pnl-row{display:flex;align-items:center;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.pnl-lbl{font-size:14px;color:#E4D5D2;min-width:150px}
+.pnl-opts{display:flex;gap:6px;flex-wrap:wrap}
+.pnl-b{font:inherit;font-size:14px;cursor:pointer;border:1px solid rgba(255,255,255,.28);
+  background:transparent;color:#fff;padding:7px 13px;border-radius:8px;transition:all .15s ease}
+.pnl-b:hover{background:rgba(255,255,255,.12)}
+.pnl-b.on{background:#E7B7B5;color:#4E1E37;border-color:#E7B7B5;font-weight:700}
+.pnl-note{font-size:13px;color:#C9AFB8;margin-top:10px;line-height:1.45}
+@media (max-width:620px){ .pnl-lbl{min-width:100%} }
+.demo{background:#FDF8EF;border:1.5px solid var(--gold);border-radius:12px;padding:16px 18px;margin-top:18px;font-size:15.5px;color:#6b4e12}
+
+@media (max-width:720px){
+  body{font-size:16px}
+  .wrap{padding:0 13px 46px}
+  .sec{padding:22px 18px;border-radius:12px}
+  h1{font-size:25px} h2{font-size:20px}
+  .corridor{grid-template-columns:1fr}
+  .legend{grid-template-columns:1fr}
+  .act .when{margin-left:0;width:100%}
+}
+
+/* ---------- печать ---------- */
+@media print{
+  @page{size:A4;margin:13mm 14mm 14mm 14mm}
+  body{background:#fff;font-size:10.4pt}
+  .protoflag,.actions,.printhint,.noprint{display:none !important}
+  .wrap{max-width:none;padding:0}
+  .top{padding:0 0 4mm}
+  .sec{
+    border:none;box-shadow:none;padding:0;margin:0 0 6mm;border-radius:0;
+    break-inside:avoid; page-break-inside:avoid;
+  }
+  .sec.brk{page-break-before:always}
+  h1{font-size:22pt} h2{font-size:15pt} h3{font-size:9.5pt;margin:6mm 0 2mm}
+  .corridor{grid-template-columns:1fr 1fr 1fr;gap:3mm}
+  .col ul{font-size:8.8pt;padding:3mm 3mm 3mm 6.5mm}
+  .col .head{font-size:8.8pt;padding:2.5mm 3mm}
+  .act{padding:4mm 5mm;margin-bottom:3mm;break-inside:avoid}
+  .act .how,.act .miss{padding-left:9mm}
+  th,td{font-size:8.4pt;padding:2mm 1.2mm}
+  .line{height:7mm}
+  tr,img{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<div class="protoflag">ФАЙЛ ДЛЯ ПРОСМОТРА КОМАНДОЙ — не для женщин. Тексты требуют медицинской вычитки Н. К. Бутолиной.</div>
+
+<div class="wrap">
+  <div class="top"><div class="mark"></div><div class="brandname">Код женского здоровья 40+</div></div>
+  <div id="app"></div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ================= СЛОВАРИ (должны совпадать с квизом) ================= */
+var OPT = {
+  AGE:    ['40–45','46–55','56–65','66 и старше'],
+  PRIMARY:['Приливы и цикл','Сон и энергия','Тазовое дно и мочеиспускание','Интимный комфорт','Движение и скованность','Несколько тем сразу','В целом чувствую себя хорошо'],
+  SIGNAL: ['Цикл','Приливы и потливость','Сон','Энергия и настроение','Мочеиспускание и таз','Сухость и интимный дискомфорт','Движение и суставы','Ничего заметного'],
+  IMPACT: ['Почти не мешает','Замечаю, но справляюсь','Регулярно мешает','Сильно ограничивает'],
+  SYSNEED:['Нет','Иногда','Да, именно так'],
+  INTENT: ['Понять, что происходит','Получить короткую практику','Собрать систему','Я уже давно лечусь и ищу, чем дополнить','Обсудить сложную ситуацию со специалистом','Поддерживать достигнутый результат'],
+  LIMITS: ['Операции за последний год','Проблемы со спиной, грыжи','Повышенное давление','Установленное опущение или пролапс','Головокружения','Ограничений нет','Не уверена'],
+  SAFETY: ['Да','Нет','Не уверена'],
+  DESIRED:['лучше спать и иметь больше энергии','меньше ограничений из-за таза','более комфортная интимная жизнь','легче двигаться','спокойнее пройти возрастные изменения','наконец иметь понятную систему']
+};
+var LIMIT_HIGH = [0,3,4,6];   // операции, пролапс, головокружения, не уверена
+var LIMIT_MILD = [1,2];       // спина, давление
+
+/* ================= КОНТЕНТ ГРУПП ================= */
+var GROUPS = {
+a:{
+  title:'Переход и ресурс',
+  mirror:'Вы замечаете, что тело стало работать по-другому: меняются сон, энергия, цикл, появляются приливы. И сложнее всего сейчас не сами симптомы, а то, что непонятно, где заканчивается обычная перестройка и начинается то, на что нужно обратить внимание.',
+  theses:[
+    'Не пытайтесь объяснить все изменения одной причиной. В этот период симптомы часто идут вместе, меняются местами и усиливают друг друга.',
+    'Хуже сон — меньше ресурса днём; меньше ресурса — острее переносятся приливы и перепады настроения. Поэтому разбирать каждый симптом по отдельности обычно неэффективно.',
+    'Задача сейчас — не «вернуть организм назад», а понять новые правила и собрать поддержку, которая помещается в вашу жизнь.'
+  ],
+  yes:[
+    {t:'Спокойное дыхание с удлинённым выдохом'},
+    {t:'Ходьба в комфортном темпе'},
+    {t:'Мягкая растяжка без боли', off:[0,3,4,6]},
+    {t:'Постоянное время отбоя и подъёма'},
+    {t:'Тёплый, а не горячий душ'},
+    {t:'Проветренная прохладная спальня'}
+  ],
+  care:['Интенсивные тренировки поздно вечером','Баня и сауна при выраженных приливах','Кофе и крепкий чай после 14 часов','Алкоголь как способ уснуть','Плотный ужин перед сном','Жёсткие ограничительные диеты'],
+  doc:['Любое кровотечение после 12 месяцев без менструаций — даже однократное','Кровотечение стало обильнее или дольше','Кровотечение между менструациями или после близости','Новое ощущение сердцебиения или перебоев','Новая необъяснимая усталость, которая быстро нарастает','Любой симптом, который вас тревожит'],
+  acts:[
+    {n:'Время отбоя', when:'каждый вечер', safe:true,
+     how:'Выберите одно время и ложитесь в него все 14 дней — даже если засыпаете не сразу. Подъём тоже в одно время, включая выходные. Это самое недооценённое действие в этом периоде.',
+     miss:'не наверстывайте утром. Просто вернитесь к своему времени сегодня вечером.'},
+    {n:'Дыхание с удлинённым выдохом', when:'вечером · 5 минут', safe:true,
+     how:'Сидя или лёжа. Вдох через нос на 4 счёта, выдох через нос или чуть приоткрытый рот на 6 счётов. Без задержек и без усилия. Если кружится голова — дышите короче: вдох на 3, выдох на 4. Это же дыхание помогает в момент прилива.',
+     miss:'сделайте 10 дыханий вместо пяти минут. Это тоже считается.'},
+    {n:'Ходьба', when:'ежедневно или через день', safe:true,
+     how:'15–20 минут в таком темпе, чтобы можно было спокойно разговаривать. Лучше в первой половине дня. Не нужно ускоряться, брать утяжелители и считать шаги.',
+     miss:'пройдите 10 минут. Короткая прогулка лучше пропущенной.'}
+  ],
+  markers:[['Приливы','сколько примерно за сутки'],['Просыпания','сколько раз проснулись ночью'],['Энергия','от 0 до 10, оценка вечером']]
+},
+b:{
+  title:'Опора и комфорт',
+  mirror:'По вашим ответам на первый план вышло то, что женщины обычно не обсуждают вслух — и из-за этого кажется, что так только у вас. Это не так. И это не та плата за возраст, которую нужно молча принять.',
+  theses:[
+    'Эти изменения очень распространены — и при этом они не являются обязательным следствием возраста или родов.',
+    'Универсальное «делайте упражнения Кегеля» подходит не каждой ситуации. При одних состояниях мышцы нужно учить сокращаться, при других — наоборот расслабляться. Без понимания характера симптомов упражнения могут не помочь или ухудшить самочувствие.',
+    'Поэтому начинать стоит не с силы, а с дыхания и умения расслаблять. Это безопасно в обоих случаях и почти всегда даёт первое улучшение.'
+  ],
+  yes:[
+    {t:'Диафрагмальное дыхание лёжа'},
+    {t:'Расслабление на выдохе'},
+    {t:'Ходьба в спокойном темпе'},
+    {t:'Достаточное питьё в течение дня'},
+    {t:'Положение лёжа с приподнятыми ногами для отдыха'},
+    {t:'Мягкая растяжка внутренней поверхности бёдер', off:[0,3,4,6]}
+  ],
+  care:['Упражнения на пресс с натуживанием','Подъём тяжестей, в том числе бытовой','Прыжки, бег, интенсивные интервальные тренировки','Задержка мочеиспускания «для тренировки» — так делать не нужно','Натуживание в туалете','Длительное стояние без перерыва'],
+  doc:['Ощущение выпячивания или того, что «что-то опускается»','Боль в тазу, промежности или при движении','Кровь в моче','Жжение или боль при мочеиспускании','Повторяющиеся воспаления','Если вам рекомендована операция — до консультации практики не начинайте'],
+  acts:[
+    {n:'Диафрагмальное дыхание лёжа', when:'утром или вечером · 5 минут', safe:true,
+     how:'Лёжа на спине, колени согнуты, стопы на полу. Одна ладонь на животе. Вдох — живот мягко поднимается, выдох — опускается. Грудная клетка почти не двигается.',
+     miss:'сделайте 10 дыханий сидя. Это тоже считается.'},
+    {n:'Расслабление на выдохе', when:'сразу после дыхания', safe:true,
+     how:'В том же положении. На выдохе сознательно отпускайте напряжение внизу живота и в области таза — не сжимайте, а именно расслабляйте. 10 медленных выдохов.',
+     miss:'сделайте 3 выдоха. Важнее регулярность, чем количество.'},
+    {n:'Ходьба', when:'ежедневно', safe:true,
+     how:'15 минут в спокойном темпе. Без утяжелителей и без ускорений.',
+     miss:'пройдите 5–7 минут в удобное время.'}
+  ],
+  markers:[['Подтекание','эпизодов за сутки'],['Срочные позывы','сколько за сутки'],['Тяжесть','от 0 до 10, вечером']]
+},
+c:{
+  title:'Система и движение',
+  mirror:'У вас отмечено сразу несколько направлений. Это тот случай, когда ещё один совет только добавляет хаоса: одно упражнение для таза, другое для сна, третье для суставов — а целой картины по-прежнему нет.',
+  theses:[
+    'Не нужно решать все задачи одновременно. Попытка делать всё полезное сразу — самая частая причина, по которой через две недели не делается ничего.',
+    'Первый шаг — выбрать один-два приоритета и определить последовательность: что сейчас, что затем, что уходит на поддержание.',
+    'Ваш результат измеряется не количеством выполненных упражнений, а тем, что вы снова можете делать без ограничения.'
+  ],
+  yes:[
+    {t:'Ходьба в комфортном темпе'},
+    {t:'Суставная гимнастика в амплитуде без боли', off:[0,4,6]},
+    {t:'Дыхательные практики'},
+    {t:'Разминка перед любой нагрузкой'},
+    {t:'Регулярность важнее интенсивности'},
+    {t:'Отдых между подходами'}
+  ],
+  care:['Резкие движения, рывки, скручивания','Новая интенсивная нагрузка без подготовки','Длительная работа «через боль»','Одновременный старт трёх и более новых практик','Занятия в дни выраженного плохого самочувствия'],
+  doc:['Острая боль, возникшая внезапно','Боль, которая усиливается после занятий и не проходит за сутки','Онемение, прострелы, слабость в конечностях','Головокружение при перемене положения тела','Любой новый выраженный симптом','Общие стоп-сигналы из последнего раздела карты'],
+  acts:[
+    {n:'Выбрать один приоритет', when:'один раз, сегодня', safe:true,
+     how:'Из всего, что вас беспокоит, выберите одно — то, что сильнее всего мешает жить. Не самое пугающее, а именно самое мешающее. Запишите в поле выше. Остальное на 14 дней сознательно откладывается.',
+     miss:'не откладывайте выбор — без него остальные действия теряют смысл.'},
+    {n:'Суставная гимнастика', when:'утром · 10 минут', safe:false,
+     how:'Шея, плечи, таз, колени, стопы. Медленно, в амплитуде без боли, по 6–8 движений на каждую зону.',
+     miss:'сделайте только шею и плечи — 3 минуты.',
+     alt:{n:'Дыхание с удлинённым выдохом', when:'утром или вечером · 5 минут',
+          how:'Сидя. Вдох через нос на 4 счёта, выдох на 6 счётов. Без задержек и без усилия. Это безопасная замена гимнастики до разговора с врачом.',
+          miss:'сделайте 10 дыханий. Это тоже считается.'}}
+    ,{n:'Ходьба', when:'ежедневно · 20 минут', safe:true,
+     how:'В комфортном темпе. Если 20 минут много — начните с 10 и добавляйте по 2 минуты каждые три дня.',
+     miss:'пройдите столько, сколько получается. Ноль — единственный плохой вариант.'}
+  ],
+  markers:[['Выполнено','галочка за день'],['Скованность утром','от 0 до 10'],['Что смогла','одна строка в конце недели']]
+}
+};
+
+/* ================= РАЗБОР PAYLOAD ================= */
+function d36(s){ var n = parseInt(s,36); return isNaN(n) ? 0 : n; }
+function bits(mask, list){
+  var r = [];
+  for(var i=0;i<list.length;i++) if(mask & (1<<i)) r.push(i);
+  return r;
+}
+function parse(p){
+  if(!p || p.length < 16 || p.charAt(0) !== '1') return null;
+  var g = p.charAt(13);
+  if(['a','b','c'].indexOf(g) === -1) return null;
+  return {
+    age:      d36(p.charAt(1)),
+    primary:  d36(p.charAt(2)),
+    signals:  bits(d36(p.substr(3,2)), OPT.SIGNAL),
+    impact:   d36(p.charAt(5)),
+    sysneed:  d36(p.charAt(6)),
+    intent:   d36(p.charAt(7)),
+    limits:   bits(d36(p.substr(8,2)), OPT.LIMITS),
+    safety:   d36(p.charAt(10)),
+    desired:  d36(p.charAt(11)),
+    group:    g,
+    edition:  d36(p.charAt(14)),
+    session:  p.substr(16,6)
+  };
+}
+function getParam(){
+  var q = window.location.search || '';
+  var m = /[?&](?:p|start)=([0-9a-zA-Z_-]+)/.exec(q);
+  return m ? m[1] : null;
+}
+
+/* ================= ХЕЛПЕРЫ ================= */
+function h(html){ var d = document.createElement('div'); d.innerHTML = html; return d.firstElementChild; }
+function esc(s){ return String(s).replace(/[&<>]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; }); }
+function li(arr){ return arr.map(function(x){ return '<li>' + esc(x) + '</li>'; }).join(''); }
+
+
+/* ================= РЕЖИМ ПРОСМОТРА ДЛЯ КОМАНДЫ =================
+   Показывается только когда страница открыта без кода ответов.
+   У женщины ссылка всегда приходит с кодом, и панели она не видит. */
+var app = document.getElementById('app');
+var card = document.createElement('div');
+
+var DEMO_PRESETS = {
+  group:  [['a','Переход и ресурс'],['b','Опора и комфорт'],['c','Система и движение']],
+  limits: [['none','нет'],['mild','спина, давление'],['high','операция за год']],
+  safety: [['1','нет'],['2','не уверена'],['0','да — стоп']],
+  branch: [['0','обычная'],['1','давно лечусь']]
+};
+var state = { group:'a', limits:'none', safety:'1', branch:'0' };
+
+var DEMO_BASE = {
+  a:{ primary:0, signals:[1,2,3], desired:0 },
+  b:{ primary:2, signals:[5,2],   desired:1 },
+  c:{ primary:5, signals:[2,6],   desired:5 }
+};
+function stateToAnswers(s){
+  var base = DEMO_BASE[s.group];
+  var lim = s.limits === 'high' ? [0] : (s.limits === 'mild' ? [1,2] : [5]);
+  return {
+    age:1, primary:base.primary, signals:base.signals, impact:2, sysneed:1,
+    intent: s.branch === '1' ? 3 : 0,
+    limits:lim, safety:parseInt(s.safety,10), desired:base.desired,
+    group:s.group, edition:0, session:''
+  };
+}
+
+function panelHTML(){
+  function row(label, key){
+    return '<div class="pnl-row"><span class="pnl-lbl">' + label + '</span><span class="pnl-opts">' +
+      DEMO_PRESETS[key].map(function(o){
+        return '<button type="button" class="pnl-b' + (state[key] === o[0] ? ' on' : '') +
+               '" data-k="' + key + '" data-v="' + o[0] + '">' + o[1] + '</button>';
+      }).join('') + '</span></div>';
+  }
+  return '<div class="pnl noprint">' +
+    '<div class="pnl-head">Режим просмотра для команды · женщина этой панели не видит</div>' +
+    row('Группа', 'group') +
+    row('Ограничения', 'limits') +
+    row('Тревожный симптом', 'safety') +
+    row('Ветка', 'branch') +
+    '<div class="pnl-note">Переключайте — карта пересобирается так же, как она соберётся у женщины по её ответам.</div>' +
+    '</div>';
+}
+
+/* ================= СБОРКА ================= */
+var raw = getParam();
+var a = parse(raw);
+var isDemo = false;
+
+/* Ссылка есть, но код повреждён — молча показывать чужую карту нельзя.
+   Обрезанная при пересылке ссылка иначе выдаст женщине не её рекомендации. */
+if(raw && !a){
+  app.innerHTML =
+    '<div class="hero"><h1>Ссылка открылась не полностью</h1></div>' +
+    '<div class="sec"><div class="note gold"><b>Мы не смогли прочитать код вашей карты</b>' +
+    'Чаще всего так бывает, если ссылку скопировали не целиком или переслали из другого приложения. ' +
+    'Откройте её, пожалуйста, прямо из сообщения бота — там она придёт полностью.</div>' +
+    '<p>Если не получится, напишите в чат боту слово «карта» — он пришлёт ссылку заново. ' +
+    'Показывать вам чужие рекомендации мы не будем: в этой карте важно, чтобы они были именно вашими.</p>' +
+    '</div>';
+  return;
+}
+/* Панель просмотра доступна только по служебному ключу ?team=1.
+   Голый адрес без кода — это не «демо», а потерянная ссылка: показываем подсказку.
+   Иначе любая женщина, открывшая адрес без хвоста, начнёт выбирать себе группу сама. */
+var isTeam = true;   // ФАЙЛ ДЛЯ ПРОСМОТРА КОМАНДОЙ: панель включена всегда
+if(!a && !isTeam){
+  app.innerHTML =
+    '<div class="hero"><h1>Здесь будет ваша маршрутная карта</h1></div>' +
+    '<div class="sec"><div class="note plain"><b>Открывайте ссылку из сообщения бота</b>' +
+    'Карта собирается по вашим ответам, поэтому её адрес содержит ваш личный код. ' +
+    'Без него мы не знаем, что именно вам подходит, — и показывать вам чужие рекомендации не будем.</div>' +
+    '<p>Если ссылка потерялась, напишите боту слово «карта» — он пришлёт её заново. ' +
+    'А если вы ещё не проходили карту сигналов, начните с неё: девять коротких вопросов, две-три минуты.</p>' +
+    '</div>';
+  return;
+}
+if(!a){ isDemo = true; a = stateToAnswers(state); }
+
+app.appendChild(card);
+
+function draw(){
+  card.innerHTML = (isDemo ? panelHTML() : '') + build(a, isDemo);
+  var pb = card.querySelector('#print');
+  if(pb) pb.addEventListener('click', function(){ window.print(); });
+  var btns = card.querySelectorAll('.pnl-b');
+  for(var i=0;i<btns.length;i++){
+    btns[i].addEventListener('click', function(){
+      state[this.getAttribute('data-k')] = this.getAttribute('data-v');
+      a = stateToAnswers(state);
+      draw();
+      window.scrollTo({ top:0, behavior:'smooth' });
+    });
+  }
+}
+
+/* ================= СБОРКА КАРТЫ ================= */
+function build(a, isDemo){
+
+if(a.safety === 0){
+  return '<div class="hero"><h1>Сначала — безопасность</h1></div>' +
+    '<div class="sec">' +
+      '<div class="note rose"><b>Практическую карту мы вам сейчас не покажем</b>' +
+      'По одному из ваших ответов нужна очная медицинская оценка. Эта карта не предназначена для диагностики, ' +
+      'поэтому мы не будем направлять вас в практическую программу до консультации — это было бы неправильно.</div>' +
+      '<h3>Что стоит сделать</h3>' +
+      '<p>Записаться к врачу и описать симптом так, как вы описали его в карте сигналов. ' +
+      'Если симптом усиливается, есть боль или обильное кровотечение — не откладывайте визит.</p>' +
+      '<h3>Чем мы можем помочь</h3>' +
+      '<p>Мы прислали в чат материал о том, как подготовиться к приёму: какие наблюдения записать ' +
+      'и какие вопросы задать. Это бесплатно и ни к чему не обязывает.</p>' +
+      '<div class="disclaim">Материал носит образовательный характер. Он не устанавливает диагноз, ' +
+      'не назначает лечение и не заменяет очное обращение к врачу.</div>' +
+    '</div>';
+}
+
+var G = GROUPS[a.group];
+var hi = a.limits.some(function(i){ return LIMIT_HIGH.indexOf(i) > -1; });
+var mild = !hi && a.limits.some(function(i){ return LIMIT_MILD.indexOf(i) > -1; });
+var limitNames = a.limits.filter(function(i){ return i !== 5; }).map(function(i){ return OPT.LIMITS[i]; });
+var uncertain = a.safety === 2;
+var longTerm = a.intent === 3;
+
+var chips = [];
+if(a.primary !== 6) chips.push(OPT.PRIMARY[a.primary]);
+a.signals.forEach(function(i){
+  if(i === 7) return;
+  var t = OPT.SIGNAL[i];
+  if(chips.indexOf(t) === -1) chips.push(t);
+});
+
+var yesIn = [], yesOut = [];
+G.yes.forEach(function(o){
+  var blocked = o.off && o.off.some(function(i){ return a.limits.indexOf(i) > -1; });
+  (blocked ? yesOut : yesIn).push(o.t);
+});
+
+var acts = G.acts.map(function(x){
+  if(hi && !x.safe && x.alt) return { alt:true, orig:x.n, n:x.alt.n, when:x.alt.when, how:x.alt.how, miss:x.alt.miss };
+  return x;
+});
+
+var html = '';
+
+html += '<div class="hero">' +
+  '<h1>Ваша маршрутная карта</h1>' +
+  '<p class="grp">' + esc(G.title) + '</p>' +
+  '<p class="lead">Что вам сейчас можно, с чего начать и как через две недели понять, что это работает.</p>' +
+  '</div>';
+
+html += '<div class="actions noprint"><button class="pbtn" id="print">Распечатать или сохранить в PDF</button></div>' +
+  '<p class="printhint noprint">На телефоне: кнопка «Поделиться» в браузере → «Печать» → «Сохранить в PDF».</p>';
+
+/* ---- 1. профиль ---- */
+html += '<div class="sec"><div class="kicker">Ваш профиль</div><h2>' + esc(G.title) + '</h2>' +
+  '<div class="mirror">' + esc(G.mirror) + '</div>';
+
+if(chips.length){
+  html += '<div class="you"><b>Вы отметили</b><div class="chips">' +
+    chips.map(function(t){ return '<span class="chip">' + esc(t) + '</span>'; }).join('') + '</div></div>';
+}
+if(limitNames.length){
+  html += '<div class="you" style="background:#FDF8EF;border-color:#E8D5A8;margin-top:10px">' +
+    '<b style="color:#8a6d1f">Ограничения, которые мы учли</b><div class="chips">' +
+    limitNames.map(function(t){ return '<span class="chip warn">' + esc(t) + '</span>'; }).join('') + '</div></div>';
+}
+
+html += '<h3>Что важно понять</h3><ol class="numlist">' + li(G.theses) + '</ol>';
+
+if(longTerm){
+  html += '<div class="note plain"><b>Отдельно — о том, что вы уже лечитесь</b>' +
+    'Лечение сделало свою часть, и это не мало. Речь не о том, чтобы заменить то, что вы делаете, ' +
+    'а о том, чего в этом наборе не хватало: ежедневного действия, которое врач назначить не может. ' +
+    'Ничего из того, что вам назначено, менять не нужно.</div>';
+}
+
+html += '<h3>Ваша точка отсчёта</h3>' +
+  '<p class="small">Запишите три изменения, которые сейчас мешают сильнее всего. Через 14 дней вы вернётесь ' +
+  'к этим строкам и увидите, что изменилось.</p>' +
+  '<div class="fill"><div class="lbl">1.</div><div class="line"></div>' +
+  '<div class="lbl" style="margin-top:12px">2.</div><div class="line"></div>' +
+  '<div class="lbl" style="margin-top:12px">3.</div><div class="line"></div></div>' +
+  '<div class="fill"><div class="lbl">Дата начала:</div><div class="line" style="max-width:230px"></div></div>' +
+  '</div>';
+
+/* ---- 2. коридор ---- */
+html += '<div class="sec brk"><div class="kicker">Главное в этой карте</div><h2>Ваш коридор безопасности</h2>' +
+  '<p>Прежде чем что-то делать, важно понимать границы. Ниже — что безопасно именно при ваших ответах, ' +
+  'за чем стоит понаблюдать и что имеет смысл обсудить с врачом до начала практик.</p>' +
+  '<div class="corridor">' +
+    '<div class="col yes"><div class="head">Можно и полезно</div><ul>' + li(yesIn) + '</ul></div>' +
+    '<div class="col care"><div class="head">С осторожностью — наблюдайте за реакцией</div><ul>' + li(G.care) + '</ul></div>' +
+    '<div class="col doc"><div class="head">Сначала обсудите с врачом</div><ul>' + li(G.doc) + '</ul></div>' +
+  '</div>';
+
+if(yesOut.length){
+  html += '<div class="note gold"><b>Что мы убрали из вашего списка и почему</b>' +
+    'Вы отметили: ' + esc(limitNames.join(', ').toLowerCase()) + '. При таких состояниях подбор практик ' +
+    'меняется, поэтому из вашего списка убрано: ' +
+    yesOut.map(function(t){ return '«' + esc(t.toLowerCase()) + '»'; }).join(', ') +
+    '. Это не запрет навсегда — вернуться к этому можно после разговора с врачом.</div>';
+} else if(mild){
+  html += '<div class="note gold"><b>Что важно учесть при ваших ограничениях</b>' +
+    'Вы отметили: ' + esc(limitNames.join(', ').toLowerCase()) + '. Действия ниже безопасны, но выполняйте их ' +
+    'в спокойном темпе, без задержек дыхания и без резких перемен положения тела. ' +
+    'При ухудшении самочувствия — прекратите и обсудите с врачом.</div>';
+}
+if(uncertain){
+  html += '<div class="note gold"><b>Вы ответили «не уверена» на вопрос о тревожном симптоме</b>' +
+    'Пока врач не сказал обратное, считайте, что ограничения есть. Практический минимум ниже ' +
+    'можно начинать, но при любом сомнении сначала консультация — это не перестраховка.</div>';
+}
+
+html += '<div class="disclaim">Списки составлены для общей ориентации и не учитывают вашу индивидуальную ' +
+  'ситуацию полностью. При любых сомнениях по конкретной практике обсудите её с лечащим врачом. ' +
+  'Карта не устанавливает диагноз, не назначает лечение и не заменяет очную консультацию и обследование.</div></div>';
+
+/* ---- 3. практический минимум ---- */
+html += '<div class="sec brk"><div class="kicker">Что делать</div><h2>Практический минимум на 14 дней</h2>' +
+  '<p>' + (hi
+    ? 'Набор подобран с учётом того, что вы отметили в ограничениях: здесь только то, что безопасно при вашем состоянии.'
+    : 'Три действия. Не четыре и не десять: четвёртое снижает выполнение всего списка.') +
+  ' Ни одно из них не требует инвентаря, абонемента и отдельного места.</p>';
+
+acts.forEach(function(x,i){
+  html += '<div class="act"><div class="r"><div class="n">' + (i+1) + '</div>' +
+    '<div class="name">' + esc(x.n) + '</div><div class="when">' + esc(x.when) + '</div></div>' +
+    (x.alt ? '<p class="how" style="color:#8a6d1f;font-size:15px;margin-bottom:6px">' +
+             'Заменено: вместо практики «' + esc(x.orig) + '» — при ваших ограничениях она подбирается индивидуально.</p>' : '') +
+    '<p class="how">' + esc(x.how) + '</p>' +
+    '<div class="miss"><b>Если сегодня не получилось:</b> ' + esc(x.miss) + '</div></div>';
+});
+
+html += '<div class="note rose"><b>Когда практику нужно прекратить</b>' +
+  'Появилась боль, головокружение, одышка, сердцебиение или любой новый выраженный симптом — ' +
+  'прекратите занятие и обратитесь к врачу. Это не неудача и не откат назад, а правильное решение.</div></div>';
+
+/* ---- 4. маркеры ---- */
+var rows = '';
+for(var d = 1; d <= 14; d++){
+  if(d === 1) rows += '<tr class="week"><td colspan="6">Первая неделя</td></tr>';
+  if(d === 8) rows += '<tr class="week"><td colspan="6">Вторая неделя</td></tr>';
+  rows += '<tr><td class="day">' + d + '</td><td></td><td></td><td></td><td></td><td></td></tr>';
+}
+html += '<div class="sec brk"><div class="kicker">Как понять, что работает</div><h2>Ваши три маркера</h2>' +
+  '<p>Отмечайте каждый вечер. Это занимает полминуты — если дольше, вы не будете это делать. ' +
+  'Точность не нужна, нужна регулярность.</p>' +
+  '<div class="legend">' + G.markers.map(function(m){
+      return '<div><b>' + esc(m[0]) + '</b>' + esc(m[1]) + '</div>'; }).join('') + '</div>' +
+  '<table><thead><tr><th>День</th><th>' + esc(G.markers[0][0]) + '</th><th>' + esc(G.markers[1][0]) +
+  '</th><th>' + esc(G.markers[2][0]) + '</th><th>Сделала<br>1 / 2 / 3</th><th>Заметка</th></tr></thead>' +
+  '<tbody>' + rows + '</tbody></table>' +
+  '<div class="fill"><div class="lbl">Что я заметила за эти две недели (своими словами):</div>' +
+  '<div class="line"></div><div class="line"></div></div></div>';
+
+/* ---- 5. что дальше ---- */
+html += '<div class="sec brk"><div class="kicker">Через 14 дней</div><h2>Что делать дальше</h2>' +
+  '<p>Вернитесь к своей точке отсчёта и перечитайте три изменения, которые вы записали в первый день. ' +
+  'Затем найдите свою строку.</p>' +
+  '<table class="next">' +
+  '<tr><td>Стало заметно легче хотя бы по одному маркеру</td><td><b>Маршрут подобран верно.</b> Продолжайте то же самое ещё две недели, ничего не добавляя. Соблазн усилить программу сейчас — главная причина, по которой люди бросают.</td></tr>' +
+  '<tr><td>Ничего не изменилось, но вы выполняли не меньше 8 дней из 14</td><td><b>Нужен другой приоритет или другой набор действий.</b> Пройдите карту сигналов заново — за две недели ваши ответы могли измениться.</td></tr>' +
+  '<tr><td>Выполняли меньше 5 дней из 14</td><td><b>Дело не в вас: минимум оказался слишком большим.</b> Оставьте одно действие из трёх — то, которое давалось легче всего.</td></tr>' +
+  '<tr><td>Стало хуже, появился новый симптом или боль</td><td><b>Практику нужно остановить.</b> Прекратите занятия и обратитесь к врачу. Это не неудача, это правильное решение.</td></tr>' +
+  '</table>';
+
+html += '<div class="goal"><b>Ради чего вы это начали</b><span>Через 6 недель для вас важнее всего — ' +
+  esc(OPT.DESIRED[a.desired]) + '.</span></div>';
+
+html += '<h3>Это не ваш первый шаг, если</h3><ul style="padding-left:22px;margin:0 0 12px">' +
+  '<li style="margin-bottom:8px">Есть острое или быстро ухудшающееся состояние — сначала нужна очная медицинская оценка.</li>' +
+  '<li style="margin-bottom:8px">Вы ждёте диагноз, схему препаратов, дозировку или отмену назначенного лечения. Ничего этого в карте нет и быть не может.</li>' +
+  '<li style="margin-bottom:8px">Вы хотите заменить картой обследование или консультацию.</li>' +
+  '<li style="margin-bottom:8px">Вам рекомендована операция и вы ищете способ её избежать. Этот вопрос решается только с лечащим врачом.</li>' +
+  '<li>Нужна помощь по беременности, онкологии или другой клинической задаче.</li></ul>' +
+  '<p><b>В этих случаях следующий шаг — подходящая медицинская помощь, а не образовательный материал.</b></p>';
+
+html += '<div class="disclaim">Материалы носят образовательный характер, предназначены для самонаблюдения ' +
+  'и подготовки к разговору со специалистом. Они не устанавливают диагноз, не назначают лечение ' +
+  'и не заменяют очное обращение к врачу. Решения о диагностике и лечении принимаются совместно ' +
+  'с квалифицированным медицинским специалистом с учётом вашей индивидуальной ситуации.<br><br>' +
+  'Карту разработала команда направления «Код женского здоровья 40+» под руководством ' +
+  'Натальи Константиновны Бутолиной — врача первой категории, врача ЛФК, главного врача медицинского ' +
+  'центра «Фомальгаут+» в Самаре. Медицинская практика с 1997 года.' +
+  (a.session ? '<br><br>Код вашей карты: ' + esc(a.session) : '') + '</div></div>';
+
+return html;
+}
+
+draw();
+})();
+</script>
+</body>
+</html>
