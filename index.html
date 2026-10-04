@@ -3,272 +3,269 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Карта сигналов 40+ — Наталья Бутолина</title>
+<title>Карта сигналов 40+ — что происходит с телом и с чего начинать | Наталья Бутолина</title>
+<meta name="description" content="Бесплатный тест на 9 вопросов: определить, какие изменения после 40 выходят у вас на первый план, что можно делать уже сегодня, а что требует врача. Без регистрации, результат сразу на странице.">
+<meta property="og:title" content="Карта сигналов 40+: с чего начинать именно вам">
+<meta property="og:description" content="9 вопросов, 2 минуты, без регистрации. Результат и первое безопасное действие — сразу на странице.">
+<meta property="og:type" content="website">
+<meta name="robots" content="index,follow">
 <style>
 :root{
-  --bg:#FCFAF6;
-  --surface:#FFFFFF;
-  --beige:#F4EAD2;
-  --rose-bg:#FBF1EF;
-  --rose:#E7B7B5;
-  --rose-line:#E4D5D2;
-  --rose-deep:#C97B84;
-  --bordeaux:#6E2C4D;
-  --bordeaux-dark:#4E1E37;
-  --sage:#6E8E7B;
-  --sage-bg:#E9F0EB;
-  --ink:#3A2E33;
-  --muted:#6A5A60;
-  --gold:#C29A4B;
+  color-scheme: light;
+  --bg:#FCFAF6; --surface:#FFFFFF;
+  --rose:#E7B7B5; --rose-bg:#FBF1EF; --rose-line:#E4D5D2; --rose-deep:#C97B84;
+  --bordeaux:#6E2C4D; --bordeaux-dark:#4E1E37;
+  --sage:#6E8E7B; --sage-bg:#E9F0EB; --sage-line:#D3E0D6;
+  --ink:#332A2E; --muted:#67585E; --gold:#C29A4B; --gold-bg:#FDF3E7;
+  --stop-bg:#FBEDEF;
   --radius:14px;
-  --shadow:0 1px 2px rgba(78,30,55,.05), 0 8px 24px rgba(78,30,55,.06);
+  --shadow:0 1px 2px rgba(78,30,55,.05), 0 10px 30px rgba(78,30,55,.08);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
 body{
-  background:var(--bg);
-  color:var(--ink);
+  background:var(--bg); color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  font-size:18px;
-  line-height:1.6;
-  -webkit-font-smoothing:antialiased;
+  font-size:17.5px; line-height:1.6; -webkit-font-smoothing:antialiased;
 }
-.protoflag{
-  background:var(--bordeaux-dark);color:#fff;font-size:12.5px;letter-spacing:.03em;
-  text-align:center;padding:7px 14px;line-height:1.4;
-}
-.wrap{max-width:660px;margin:0 auto;padding:0 20px 64px}
-.brand{
-  display:flex;align-items:center;gap:10px;justify-content:center;
-  padding:26px 0 6px;
-}
-.brand-mark{
-  width:26px;height:26px;border-radius:50%;flex:none;
-  background:radial-gradient(circle at 32% 30%, var(--rose) 0%, var(--rose-deep) 55%, var(--bordeaux) 100%);
-}
-.brand-name{font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--bordeaux);font-weight:600}
+body.embed{background:transparent}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 56px}
+body.embed .wrap{padding:0 0 8px;max-width:none}
 
-/* ---------- screens ---------- */
-.screen{display:none;animation:rise .32s ease both}
-.screen.on{display:block}
-@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+/* ---------- шапка страницы (скрыта в embed) ---------- */
+.pagehead{padding:30px 0 18px}
+body.embed .pagehead{display:none}
+.brandline{display:flex;align-items:center;gap:11px;margin-bottom:18px}
+.brandline .ava{width:46px;height:46px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 32% 30%, var(--rose) 0%, var(--rose-deep) 58%, #B9646F 100%);}
+.brandline .bn{font-size:15px;line-height:1.35}
+.brandline .bn b{display:block;color:var(--bordeaux-dark);font-weight:650}
+.brandline .bn span{color:var(--muted);font-size:13.5px}
+h1{font-size:28px;line-height:1.22;margin:0 0 12px;color:var(--bordeaux-dark);letter-spacing:-.015em}
+.lede{color:var(--muted);font-size:17px;margin:0 0 4px}
 
-/* ---------- intro ---------- */
-.card{
-  background:var(--surface);border:1px solid var(--rose-line);border-radius:var(--radius);
-  box-shadow:var(--shadow);padding:34px 30px;margin-top:18px;
-}
-h1{
-  font-size:29px;line-height:1.25;margin:0 0 16px;font-weight:700;color:var(--bordeaux-dark);
-  letter-spacing:-.01em;
-}
-.lead{font-size:18.5px;color:var(--ink);margin:0 0 22px}
-.eyebrow{
-  display:inline-block;font-size:12px;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--sage);font-weight:700;margin-bottom:14px;
-}
-.btn{
-  display:block;width:100%;border:0;cursor:pointer;font:inherit;font-weight:650;
-  background:var(--bordeaux);color:#fff;padding:17px 22px;border-radius:11px;
-  font-size:17.5px;letter-spacing:.01em;transition:background .18s ease, transform .12s ease;
-  text-align:center;
-}
+/* ---------- карточка квиза ---------- */
+.card{background:var(--surface);border:1px solid var(--rose-line);border-radius:18px;
+  box-shadow:var(--shadow);overflow:hidden}
+.card-in{padding:24px 22px 22px}
+@media (max-width:520px){ .card-in{padding:19px 16px 18px} }
+
+.rail{display:flex;gap:4px;margin-bottom:9px}
+.rail i{height:5px;flex:1;border-radius:3px;background:#EFE4E1;transition:background .3s}
+.rail i.done{background:var(--rose-deep)}
+.rail i.now{background:var(--bordeaux)}
+.stepline{font-size:13.5px;color:var(--muted);margin-bottom:17px;display:flex;justify-content:space-between;gap:10px}
+.stepline b{font-weight:600;color:var(--bordeaux)}
+
+.q{font-size:21px;line-height:1.3;margin:0 0 7px;color:var(--bordeaux-dark);font-weight:650}
+.hint{font-size:14.5px;color:var(--muted);margin:0 0 15px}
+.why{background:var(--sage-bg);border:1px solid var(--sage-line);border-radius:12px;
+  padding:12px 15px;font-size:14.5px;line-height:1.5;margin:0 0 16px;color:#38513F}
+.why b{display:block;margin-bottom:3px;color:var(--sage)}
+
+.opts{display:grid;gap:9px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  border:1.5px solid var(--rose-line);background:var(--surface);color:var(--ink);
+  border-radius:12px;padding:14px 15px;font:inherit;font-size:17px;line-height:1.35;
+  min-height:56px;transition:border-color .14s,background .14s}
+.opt:hover{border-color:var(--rose);background:var(--rose-bg)}
+.opt .box{width:23px;height:23px;flex:none;border:2px solid var(--rose);border-radius:50%;
+  position:relative;transition:all .14s}
+.opt.multi .box{border-radius:6px}
+.opt.on{border-color:var(--bordeaux);background:var(--rose-bg)}
+.opt.on .box{border-color:var(--bordeaux);background:var(--bordeaux)}
+.opt.on .box:after{content:"";position:absolute;left:6px;top:2px;width:7px;height:12px;
+  border-right:2.5px solid #fff;border-bottom:2.5px solid #fff;transform:rotate(40deg)}
+.opt.off{opacity:.45}
+
+.nav{display:flex;gap:12px;align-items:center;margin-top:18px}
+.btn{flex:1;border:0;cursor:pointer;font:inherit;font-weight:650;background:var(--bordeaux);color:#fff;
+  padding:16px;border-radius:12px;font-size:17.5px;min-height:56px;
+  transition:background .15s,transform .08s}
 .btn:hover{background:var(--bordeaux-dark)}
 .btn:active{transform:translateY(1px)}
-.btn:disabled{background:var(--rose-line);color:#A2938F;cursor:not-allowed;transform:none}
-.btn.ghost{background:transparent;color:var(--bordeaux);border:1.5px solid var(--rose-line);font-weight:600}
-.btn.ghost:hover{background:var(--rose-bg);border-color:var(--rose)}
-.fineprint{font-size:14px;color:var(--muted);text-align:center;margin-top:14px;line-height:1.5}
-.introlist{list-style:none;padding:0;margin:0 0 26px}
-.introlist li{position:relative;padding-left:26px;margin-bottom:11px;font-size:16.5px;color:var(--ink)}
-.introlist li::before{
-  content:"";position:absolute;left:0;top:.6em;width:9px;height:9px;border-radius:50%;
-  background:var(--rose);
-}
-
-/* ---------- progress ---------- */
-.progress{display:flex;gap:5px;margin:26px 0 4px}
-.progress i{flex:1;height:5px;border-radius:3px;background:var(--rose-line);transition:background .3s ease}
-.progress i.done{background:var(--rose-deep)}
-.progress i.now{background:var(--bordeaux)}
-.step{font-size:13.5px;color:var(--muted);letter-spacing:.04em;margin-bottom:20px}
-
-/* ---------- question ---------- */
-.q{font-size:24px;line-height:1.33;font-weight:700;color:var(--bordeaux-dark);margin:0 0 6px}
-.qhint{font-size:15px;color:var(--muted);margin:0 0 20px}
-.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:24px}
-.opt{
-  display:flex;align-items:flex-start;gap:13px;cursor:pointer;
-  background:var(--surface);border:1.5px solid var(--rose-line);border-radius:12px;
-  padding:15px 17px;font-size:17px;line-height:1.45;transition:all .16s ease;
-  user-select:none;
-}
-.opt:hover{border-color:var(--rose);background:var(--rose-bg)}
-.opt:focus-visible{outline:2.5px solid var(--sage);outline-offset:2px}
-.opt.sel{border-color:var(--bordeaux);background:var(--rose-bg);box-shadow:inset 3px 0 0 var(--bordeaux)}
-.opt.dim{opacity:.42;pointer-events:none}
-.mark{
-  flex:none;width:22px;height:22px;border:2px solid var(--rose);background:#fff;
-  margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all .16s ease;
-}
-.mark.round{border-radius:50%}
-.mark.square{border-radius:6px}
-.opt.sel .mark{border-color:var(--bordeaux);background:var(--bordeaux)}
-.mark svg{opacity:0;transition:opacity .14s ease}
-.opt.sel .mark svg{opacity:1}
-.nav{display:flex;gap:12px;align-items:center}
-.nav .btn{flex:1}
-.back{
-  background:none;border:0;cursor:pointer;font:inherit;font-size:15.5px;color:var(--muted);
-  padding:14px 4px;text-decoration:underline;text-underline-offset:3px;
-}
+.btn:disabled{background:#E8DCD9;color:#A2938F;cursor:not-allowed;transform:none}
+.btn.wide{width:100%;flex:none}
+.back{background:none;border:0;cursor:pointer;font:inherit;font-size:15px;color:var(--muted);
+  padding:14px 4px;text-decoration:underline;text-underline-offset:3px}
 .back:hover{color:var(--bordeaux)}
-.counter{font-size:14px;color:var(--sage);font-weight:600;margin-bottom:14px;min-height:20px}
+.quiet{display:block;text-align:center;margin-top:10px;font-size:15px;color:var(--muted);
+  background:none;border:0;cursor:pointer;font-family:inherit;width:100%;
+  padding:13px 10px;min-height:46px;line-height:1.4;
+  text-decoration:underline;text-underline-offset:3px}
+.quiet:hover{color:var(--bordeaux)}
 
-/* ---------- result ---------- */
-.profile-tag{
-  display:inline-block;background:var(--sage-bg);color:var(--sage);
-  font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
-  padding:6px 13px;border-radius:99px;margin-bottom:15px;
-}
-h2.rt{font-size:27px;line-height:1.25;margin:0 0 20px;color:var(--bordeaux-dark);font-weight:700}
-.mirror{
-  background:var(--rose-bg);border-left:4px solid var(--rose-deep);
-  padding:19px 21px;border-radius:0 12px 12px 0;font-size:18px;margin:0 0 26px;line-height:1.55;
-}
-h3.rs{
-  font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--bordeaux);
-  font-weight:700;margin:30px 0 10px;
-}
-.today{
-  background:var(--sage-bg);border-radius:12px;padding:20px 22px;margin-top:10px;
-  border:1px solid #D3E0D6;
-}
-.today p{margin:0;font-size:17.5px;line-height:1.55}
-.locked{
-  border:1.5px dashed var(--rose);border-radius:12px;padding:20px 22px;background:#fff;margin-top:10px;
-}
-.locked ul{margin:0;padding-left:20px}
-.locked li{margin-bottom:9px;font-size:16.5px}
-.locked li:last-child{margin-bottom:0}
-.alert{
-  border-radius:12px;padding:18px 20px;margin:0 0 24px;font-size:16.5px;line-height:1.55;
-}
-.alert.warn{background:#FDF3E7;border:1.5px solid var(--gold);color:#6b4e12}
-.alert.stop{background:#FBEDEF;border:1.5px solid var(--rose-deep);color:var(--bordeaux-dark)}
-.alert.note{background:var(--rose-bg);border:1.5px solid var(--rose-line);color:var(--ink)}
-.alert b{display:block;margin-bottom:5px;font-size:15.5px}
-.mess{margin-top:28px}
-.mess-title{font-size:17px;font-weight:650;color:var(--bordeaux-dark);margin-bottom:12px;text-align:center}
-.mess-row{display:flex;gap:9px}
-.messbtn{
-  flex:1;display:flex;align-items:center;justify-content:center;text-align:center;
-  background:var(--bordeaux);color:#fff;text-decoration:none;font-weight:650;font-size:16.5px;
-  padding:16px 8px;border-radius:11px;transition:background .18s ease, transform .12s ease;
-  line-height:1.3;
-}
-.messbtn:hover{background:var(--bordeaux-dark)}
-.messbtn:active{transform:translateY(1px)}
-.messbtn.done{background:var(--rose-line);color:#8B7B77;font-size:14px;font-weight:600;pointer-events:none}
-@media (max-width:480px){ .mess-row{flex-direction:column} }
-.disc{
-  font-size:14px;color:var(--muted);line-height:1.55;margin-top:22px;
-  padding-top:18px;border-top:1px solid var(--rose-line);
-}
-.restart{text-align:center;margin-top:22px}
+/* ---------- экран входа ---------- */
+.entry h2{font-size:25px;line-height:1.24;margin:0 0 12px;color:var(--bordeaux-dark);letter-spacing:-.01em}
+.entry .hook{font-size:17px;margin:0 0 16px;line-height:1.55}
+.entry .hook b{color:var(--bordeaux-dark)}
+.ctx{display:inline-block;background:var(--rose-bg);border:1px solid var(--rose-line);
+  color:var(--bordeaux);border-radius:99px;padding:6px 13px;font-size:13.5px;margin-bottom:14px}
+.deal{border-top:1px solid #F1E8E6;border-bottom:1px solid #F1E8E6;padding:14px 0;margin:18px 0}
+.deal div{display:flex;gap:10px;align-items:flex-start;font-size:15.5px;padding:4px 0;color:var(--ink)}
+.deal div i{color:var(--sage);font-style:normal;font-weight:700;flex:none;width:17px}
+.trust{display:flex;gap:12px;align-items:flex-start;background:var(--bg);border-radius:12px;
+  padding:13px 15px;font-size:14.5px;color:var(--muted);line-height:1.5}
+.trust .ava{width:42px;height:42px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 32% 30%, var(--rose) 0%, var(--rose-deep) 58%, #B9646F 100%)}
+.trust b{color:var(--bordeaux-dark);display:block;font-size:15px;margin-bottom:1px}
+.ph{background:#FFF6D9;border-bottom:1px dashed var(--gold);padding:0 2px}
 
-/* ---------- dev panel ---------- */
-.devtoggle{
-  display:block;margin:26px auto 0;background:none;border:0;cursor:pointer;font:inherit;
-  font-size:13.5px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;
-}
-.dev{
-  margin-top:14px;background:#fff;border:1px solid var(--rose-line);border-radius:12px;
-  padding:18px 20px;font-size:14px;display:none;
-}
-.dev.on{display:block}
-.dev h4{margin:0 0 12px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--bordeaux)}
-.dev table{width:100%;border-collapse:collapse}
-.dev td{padding:6px 0;border-bottom:1px solid #F2EBE9;vertical-align:top}
-.dev td:first-child{color:var(--muted);width:38%;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
-.dev td:last-child{color:var(--ink)}
-.dev tr:last-child td{border-bottom:0}
+/* ---------- микро-результат ---------- */
+.tag{display:inline-block;background:var(--sage-bg);color:var(--sage);font-size:11.5px;letter-spacing:.11em;
+  text-transform:uppercase;font-weight:700;padding:6px 12px;border-radius:99px;margin-bottom:12px}
+.tag.rose{background:var(--rose-bg);color:var(--bordeaux)}
+.mr h2{font-size:23px;line-height:1.25;margin:0 0 12px;color:var(--bordeaux-dark)}
+.mr p{margin:0 0 13px}
+.todo{background:var(--rose-bg);border-left:4px solid var(--rose-deep);border-radius:0 12px 12px 0;
+  padding:15px 17px;margin:0 0 16px}
+.todo b{display:block;color:var(--bordeaux-dark);margin-bottom:5px;font-size:15.5px}
+.todo p{margin:0;font-size:16.5px}
+.gate{background:var(--sage-bg);border:1px solid var(--sage-line);border-radius:12px;padding:15px 17px;margin:0 0 4px}
+.gate b{display:block;color:#38513F;margin-bottom:6px}
+.gate p{margin:0 0 8px;font-size:15.5px;color:#38513F;line-height:1.5}
+.gate p:last-child{margin:0}
 
-@media (max-width:520px){
-  body{font-size:17px}
-  .wrap{padding:0 14px 48px}
-  .card{padding:26px 20px;border-radius:12px}
-  h1{font-size:25px}
-  .q{font-size:21px}
-  h2.rt{font-size:23px}
-  .opt{font-size:16px;padding:14px 15px}
+/* ---------- результат ---------- */
+.res h2{font-size:26px;line-height:1.22;margin:0 0 6px;color:var(--bordeaux-dark)}
+.res .sect{margin:0 0 7px;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--bordeaux);font-weight:700;margin-top:22px}
+.res p{margin:0 0 12px}
+.alert{border-radius:12px;padding:14px 16px;margin:0 0 15px;font-size:15.5px;line-height:1.5}
+.alert b{display:block;margin-bottom:4px}
+.alert.warn{background:var(--gold-bg);border:1.5px solid var(--gold);color:#6b4e12}
+.alert.stop{background:var(--stop-bg);border:1.5px solid var(--rose-deep);color:var(--bordeaux-dark)}
+
+.mk{border:1.5px solid var(--rose-line);border-radius:12px;padding:15px 16px;margin-bottom:11px}
+.mk .mkq{font-size:16.5px;margin-bottom:11px;line-height:1.35;color:var(--bordeaux-dark);font-weight:600}
+.mk .lv{display:flex;gap:7px}
+.mk .lv button{flex:1;border:1.5px solid var(--rose-line);background:var(--surface);color:var(--ink);
+  border-radius:10px;padding:12px 6px;font:inherit;font-size:15px;cursor:pointer;min-height:48px;
+  transition:all .14s;line-height:1.25}
+.mk .lv button:hover{border-color:var(--rose);background:var(--rose-bg)}
+.mk .lv button.on{background:var(--bordeaux);color:#fff;border-color:var(--bordeaux)}
+
+.chans{display:grid;gap:10px;margin-top:4px}
+.chan{display:flex;align-items:center;justify-content:center;gap:9px;text-decoration:none;
+  background:var(--bordeaux);color:#fff;border-radius:12px;padding:16px;font-weight:650;
+  font-size:17px;min-height:58px;transition:background .15s}
+.chan:hover{background:var(--bordeaux-dark)}
+.chan.alt{background:var(--surface);color:var(--bordeaux);border:1.5px solid var(--bordeaux)}
+.chan.alt:hover{background:var(--rose-bg)}
+.fine{font-size:14px;color:var(--muted);margin:13px 0 0;line-height:1.5}
+
+/* ---------- SEO-блок под квизом (скрыт в embed и во время прохождения) ---------- */
+.seo{margin-top:34px;color:var(--ink)}
+body.embed .seo, body.running .seo{display:none}
+.seo h2{font-size:21px;color:var(--bordeaux-dark);margin:28px 0 10px;line-height:1.3}
+.seo h3{font-size:17.5px;color:var(--bordeaux-dark);margin:22px 0 8px}
+.seo p,.seo li{font-size:16.5px;color:#4A3C42}
+.seo ul{padding-left:22px}
+.seo .disc{margin-top:26px;padding-top:16px;border-top:1px solid var(--rose-line);
+  font-size:14.5px;color:var(--muted)}
+
+/* ---------- печать карты ---------- */
+#printcard{display:none}
+@media print{
+  body{background:#fff;font-size:12pt}
+  .pagehead,.card,.seo,.quiet{display:none !important}
+  #printcard{display:block}
+  #printcard h2{color:#000;font-size:18pt;margin:0 0 4pt}
+  #printcard h4{font-size:10pt;letter-spacing:.08em;text-transform:uppercase;margin:14pt 0 3pt}
+  #printcard .pf{margin-top:18pt;padding-top:8pt;border-top:1px solid #999;font-size:9pt;color:#444}
 }
 </style>
 </head>
 <body>
-
-<div class="protoflag">Прототип воронки. Тексты — черновик и требуют медицинской вычитки Н. К. Бутолиной до публикации.</div>
-
 <div class="wrap">
 
-  <div class="brand">
-    <div class="brand-mark"></div>
-    <div class="brand-name">Код женского здоровья 40+</div>
-  </div>
-
-  <!-- ================= INTRO ================= -->
-  <section class="screen on" id="s-intro">
-    <div class="card">
-      <span class="eyebrow">Карта сигналов</span>
-      <h1>Что сейчас больше всего требует внимания в вашем женском здоровье после 40?</h1>
-      <p class="lead">Ответьте на 9 коротких вопросов — и получите маршрутную карту: что вам сейчас можно делать самой, что стоит отложить и с чего разумнее начать.</p>
-      <ul class="introlist">
-        <li>Ваш коридор безопасности: что можно, что с осторожностью, что сначала обсудить с врачом</li>
-        <li>Практический минимум на 14 дней — 2–3 действия по 10–15 минут</li>
-        <li>Три маркера, по которым будет видно, работает маршрут или его надо менять</li>
-      </ul>
-      <button class="btn" id="start">Узнать свой маршрут</button>
-      <p class="fineprint">2–3 минуты · бесплатно · это не медицинская диагностика</p>
-    </div>
-  </section>
-
-  <!-- ================= QUIZ ================= -->
-  <section class="screen" id="s-quiz">
-    <div class="progress" id="prog"></div>
-    <div class="step" id="stepnum"></div>
-    <div class="card" style="margin-top:0">
-      <p class="q" id="qtext"></p>
-      <p class="qhint" id="qhint"></p>
-      <div class="counter" id="counter"></div>
-      <div class="opts" id="opts"></div>
-      <div class="nav">
-        <button class="back" id="back">Назад</button>
-        <button class="btn" id="next" disabled>Далее</button>
+  <header class="pagehead">
+    <div class="brandline">
+      <div class="ava"></div>
+      <div class="bn">
+        <b>Наталья Бутолина</b>
+        <span class="ph" data-ph="regalia">врач-гинеколог · указать специализацию и стаж</span>
       </div>
     </div>
-  </section>
+    <h1>Карта сигналов 40+</h1>
+    <p class="lede">Короткий тест, который показывает, какие изменения выходят у вас на первый план сейчас — и с какого действия безопасно начинать именно вам.</p>
+  </header>
 
-  <!-- ================= RESULT ================= -->
-  <section class="screen" id="s-result">
-    <div class="card">
-      <div id="result-body"></div>
-    </div>
-    <button class="devtoggle" id="devtoggle">Показать данные для CRM</button>
-    <div class="dev" id="dev">
-      <h4>Что уходит в CRM</h4>
-      <table id="devtable"></table>
-    </div>
-    <div class="restart"><button class="back" id="restart">Пройти заново</button></div>
+  <main class="card">
+    <div class="card-in" id="stage"></div>
+  </main>
+
+  <button class="quiet" id="resetbtn" style="display:none">Начать заново</button>
+
+  <section class="seo">
+    <h2>Почему после 40 «работающие у всех» советы часто не работают</h2>
+    <p>После 40 лет изменения в теле редко приходят по одному. Хуже сон — меньше ресурса днём; меньше ресурса — острее реакция на приливы и перепады настроения; напряжение и усталость меняют то, как работают мышцы тазового дна. Поэтому разбирать каждый симптом отдельно обычно неэффективно: женщина делает всё, что советуют, результата нет, и она решает, что дело в ней.</p>
+    <p>Вторая причина — универсальные комплексы. Самый известный пример: упражнения Кегеля. Их советуют почти всем, и логика звучит убедительно: мышца слабая, надо качать. Но при части состояний мышцы тазового дна не слабые, а наоборот перенапряжённые, и тогда «качать» делает хуже. Поэтому порядок действий важнее самих действий, а порядок зависит от того, что именно происходит у вас.</p>
+
+    <h2>Что делает этот тест</h2>
+    <p>Тест состоит из девяти вопросов и занимает около двух минут. Он не ставит диагноз. Он делает три вещи:</p>
+    <ul>
+      <li>показывает, какая из групп изменений выходит у вас на первый план сейчас;</li>
+      <li>подбирает первое действие, которое безопасно при вашем наборе ответов;</li>
+      <li>отдельно проверяет, нет ли среди ваших ответов того, с чем нужно сначала к врачу, а не в программу практик.</li>
+    </ul>
+    <h3>Нужна ли регистрация</h3>
+    <p>Нет. Результат появляется на этой же странице сразу после последнего вопроса. Контакты нужны только в одном случае — если вы сами захотите получить полную карту с разбором границ и планом на 14 дней в мессенджер.</p>
+    <h3>Что будет, если один из ответов окажется тревожным</h3>
+    <p>Тест не покажет вам практическую программу. Вместо неё вы получите материал о подготовке к приёму врача: что записать до визита и какие вопросы задать. Это единственная ситуация, в которой тест ничего не предлагает, кроме обращения к специалисту.</p>
+
+    <h2>Частые вопросы</h2>
+    <h3>Мне 56, уже несколько лет без менструаций. Тест для меня?</h3>
+    <p>Да. Вопросы учитывают возрастной этап, и для периода после менопаузы набор приоритетов отличается от периода перехода.</p>
+    <h3>У меня проблемы со спиной и были операции. Можно ли мне практики?</h3>
+    <p>В тесте есть отдельный вопрос про ограничения. Если вы их отметите, карта придёт в осторожной редакции: силовые упражнения из неё исключаются, а раздел о границах расширяется.</p>
+    <h3>Я уже лечусь у врача. Есть ли смысл?</h3>
+    <p>Тест не заменяет и не корректирует назначения. Он помогает понять, что из образа жизни и самонаблюдения имеет смысл добавить, и что обсудить на следующем приёме.</p>
+
+    <p class="disc">Материалы на этой странице носят образовательный характер, не устанавливают диагноз, не назначают лечение и не заменяют консультацию врача. При тревожных симптомах обратитесь к специалисту.</p>
   </section>
 
 </div>
+
+<div id="printcard"></div>
 
 <script>
 (function(){
 "use strict";
 
-/* ---------------- ДАННЫЕ КВИЗА ---------------- */
-var QUESTIONS = [
+/* ==========================================================================
+   КОНФИГ. Единственный блок, который правит техспециалист перед запуском.
+   ========================================================================== */
+var CFG = {
+  /* Релей — свой тонкий обработчик (n8n / Make / Apps Script / серверный скрипт).
+     Он уже на своей стороне пишет в SalesBot и GetCourse.
+     ВАЖНО: ключи SalesBot и GetCourse сюда не кладутся никогда — страница публичная.
+     Пустая строка = отправка выключена, квиз работает, данные не уходят. */
+  relay: '',
+
+  /* ID Яндекс.Метрики. 0 = цели не отправляются. */
+  ymId: 0,
+
+  /* Адреса ботов. Порядок в массиве = порядок кнопок на экране результата. */
+  channels: [
+    { key:'tg',  label:'Telegram', url:function(p){ return 'https://t.me/BOTNAME?start=' + p; } },
+    { key:'vk',  label:'ВКонтакте', url:function(p){ return 'https://vk.me/CLUBNAME?ref=' + p + '&ref_source=quiz'; } },
+    { key:'max', label:'MAX', url:function(p){ return 'https://max.ru/BOTNAME?start=' + p; } }
+  ],
+
+  /* Показывать ли тихую ссылку «забрать карту без мессенджера» (печать/PDF).
+     Снимает часть контактов, но заметно поднимает доверие на холодном трафике.
+     Выключается, если решите, что контакт важнее. */
+  allowPrint: true,
+
+  /* Сколько дней хранить незаконченное прохождение, чтобы женщина могла вернуться. */
+  resumeDays: 7
+};
+
+/* ==========================================================================
+   ВОПРОСЫ. Первые три — лёгкие, без интимного. Дальше — после микро-результата.
+   ========================================================================== */
+var EASY = [
   { id:'AGE_STAGE', type:'single',
     q:'Какой у вас сейчас возрастной этап?',
     opts:['40–45','46–55','56–65','66 и старше'] },
@@ -281,8 +278,10 @@ var QUESTIONS = [
     q:'Что заметно изменилось за последние месяцы?',
     hint:'Можно выбрать до трёх вариантов',
     opts:['Цикл','Приливы и потливость','Сон','Энергия и настроение','Мочеиспускание и таз','Сухость и интимный дискомфорт','Движение и суставы','Ничего заметного'],
-    exclusive:['Ничего заметного'] },
+    exclusive:['Ничего заметного'] }
+];
 
+var DEEP = [
   { id:'IMPACT', type:'single',
     q:'Насколько это влияет на обычную жизнь?',
     opts:['Почти не мешает','Замечаю, но справляюсь','Регулярно мешает','Сильно ограничивает'] },
@@ -297,12 +296,16 @@ var QUESTIONS = [
 
   { id:'LIMITS', type:'multi',
     q:'Есть ли сейчас что-то, что ограничивает вашу физическую активность?',
-    hint:'Можно выбрать несколько. Это нужно, чтобы не предложить вам того, что вам сейчас не подходит',
+    hint:'Можно выбрать несколько',
+    why:{ t:'Зачем этот вопрос',
+          p:'Это единственный способ не предложить вам то, что в вашем случае может навредить. Если вы что-то отметите, силовые упражнения из вашей карты будут исключены, а не «даны с оговоркой».' },
     opts:['Операции за последний год','Проблемы со спиной, грыжи','Повышенное давление','Установленное опущение или пролапс','Головокружения','Ограничений нет','Не уверена'],
     exclusive:['Ограничений нет','Не уверена'] },
 
   { id:'SAFETY', type:'single',
-    q:'Есть ли сейчас необычное кровотечение после 12 месяцев без менструаций либо другой новый симптом, который быстро усиливается и серьёзно вас тревожит?',
+    q:'Есть ли сейчас необычное кровотечение после 12 месяцев без менструаций — либо другой новый симптом, который быстро усиливается и серьёзно вас тревожит?',
+    why:{ t:'Это вопрос про безопасность, а не про продажу',
+          p:'Если ответ «да» или «не уверена», мы не покажем вам практическую программу. Вместо неё дадим материал о подготовке к приёму врача. Это единственный вопрос, который может отменить всё остальное.' },
     opts:['Да','Нет','Не уверена'] },
 
   { id:'DESIRED', type:'single',
@@ -310,457 +313,675 @@ var QUESTIONS = [
     opts:['Лучше спать и больше энергии','Меньше ограничений из-за таза','Комфортнее интимная жизнь','Легче двигаться','Спокойнее пройти возрастные изменения','Наконец иметь понятную систему'] }
 ];
 
-/* ---------------- ТЕКСТЫ РЕЗУЛЬТАТА ---------------- */
+var QUESTIONS = EASY.concat(DEEP);
+var TOTAL = QUESTIONS.length;
+
+/* ==========================================================================
+   ТЕМЫ ОРГАНИКИ. ?topic=<ключ> — предзаполняет вопрос 2 и меняет вход.
+   Ключ ставится в ссылке из статьи блога.
+   ========================================================================== */
+var TOPICS = {
+  pelvic:    { primary:'Тазовое дно и мочеиспускание', read:'про тазовое дно и мочеиспускание' },
+  cycle:     { primary:'Приливы и цикл',               read:'про приливы и цикл' },
+  sleep:     { primary:'Сон и энергия',                read:'про сон и энергию' },
+  intimacy:  { primary:'Интимный комфорт',             read:'про интимный комфорт' },
+  motion:    { primary:'Движение и скованность',       read:'про движение и суставы' },
+  system:    { primary:'Несколько тем сразу',          read:'про то, как собрать всё в систему' }
+};
+
+/* ==========================================================================
+   МИКРО-РЕЗУЛЬТАТ. Выдаётся после третьего вопроса, до интимных.
+   Это плата женщине за то, что она пойдёт дальше. Он должен быть полезен сам по себе.
+   ========================================================================== */
+var MICRO = {
+  A: { title:'Похоже на период перехода',
+       body:'По первым ответам на первый план выходят изменения, характерные для периода после 40: цикл, приливы, сон или уровень энергии. Эти вещи почти всегда идут вместе и усиливают друг друга, поэтому разбирать их по отдельности обычно не получается.',
+       todo:'Выберите время отбоя и в ближайшие две недели ложитесь в одно и то же время — даже если заснуть удаётся не сразу. Это самое недооценённое действие в этом периоде и одно из немногих, которое безопасно при любых ограничениях.' },
+  B: { title:'Похоже на тему опоры и комфорта',
+       body:'По первым ответам вперёд вышло то, что женщины обычно не обсуждают вслух — и из-за этого кажется, что так только у вас. Это не так, и это не та плата за возраст, которую нужно молча принять.',
+       todo:'Сегодня вечером лягте на спину, согните колени, положите ладонь на живот и подышите 5 минут так, чтобы поднимался живот, а не грудная клетка. Ничего не сжимайте и не втягивайте. Это безопасно и при слабых, и при перенапряжённых мышцах — в отличие от упражнений Кегеля.' },
+  C: { title:'Похоже, тем сразу несколько',
+       body:'Вы отметили несколько направлений. Это тот случай, когда ещё один совет только добавляет хаоса: одно упражнение для таза, другое для сна, третье для суставов — а целой картины по-прежнему нет.',
+       todo:'Выпишите всё, что вас беспокоит, и отметьте одно — то, что сильнее всего мешает жить. Не самое пугающее, а именно самое мешающее. На ближайшие две недели остальное сознательно откладывается.' }
+};
+
+/* ==========================================================================
+   ПРОФИЛИ. Полный текст результата.
+   ========================================================================== */
 var RESULTS = {
-  A:{
-    tag:'Ваш профиль',
-    title:'Переход и ресурс',
-    mirror:'По вашим ответам сейчас на первый план выходят изменения, характерные для периода после 40: цикл, приливы, сон или уровень энергии. Судя по тому, что вы отметили, больше всего мешает не какой-то один симптом, а ощущение, что тело стало работать по непонятным правилам.',
-    meaning:'В этот период симптомы часто идут вместе и усиливают друг друга: хуже сон — меньше ресурса днём, меньше ресурса — острее реакция на приливы и перепады настроения. Поэтому разбирать каждый симптом по отдельности обычно неэффективно. Начинать разумнее с того, что влияет на остальное.',
-    today:'Выберите время отбоя и в ближайшие две недели ложитесь в одно и то же время — даже если заснуть удаётся не сразу. Это самое недооценённое действие в этом периоде и одно из немногих, которое безопасно при любых ограничениях.'
-  },
-  B:{
-    tag:'Ваш профиль',
-    title:'Опора и комфорт',
-    mirror:'По вашим ответам на первый план вышло то, что женщины обычно не обсуждают вслух — и из-за этого кажется, что так только у вас. Это не так. И это не та плата за возраст, которую нужно молча принять.',
-    meaning:'Такие изменения после 40 очень распространены — и при этом они не являются обязательным следствием возраста или родов. Важно другое: универсальное «делайте упражнения Кегеля» подходит не каждой ситуации. При одних состояниях мышцы нужно учить сокращаться, при других — наоборот расслабляться. Поэтому начинать стоит не с силы, а с дыхания.',
-    today:'Сегодня вечером лягте на спину, согните колени, положите ладонь на живот и подышите 5 минут так, чтобы поднимался живот, а не грудная клетка. Ничего не сжимайте и не втягивайте. Это безопасно в обоих случаях и почти всегда даёт первое улучшение.'
-  },
-  C:{
-    tag:'Ваш профиль',
-    title:'Система и движение',
-    mirror:'У вас отмечено сразу несколько направлений. Это тот случай, когда ещё один совет только добавляет хаоса: одно упражнение для таза, другое для сна, третье для суставов — а целой картины по-прежнему нет.',
-    meaning:'Когда беспокоит несколько вещей сразу, самая частая ошибка — пытаться делать всё полезное одновременно. Через две недели не делается ничего, и вдобавок появляется чувство вины. Работает обратное: выбрать один-два приоритета и определить последовательность — что сейчас, что затем, что уходит на поддержание.',
-    today:'Выпишите всё, что вас беспокоит, и отметьте одно — то, что сильнее всего мешает жить. Не самое пугающее, а именно самое мешающее. На ближайшие две недели остальное сознательно откладывается. Это и есть первый шаг.'
-  }
+  A:{ title:'Переход и ресурс',
+      mirror:'По вашим ответам сейчас на первый план выходят изменения, характерные для периода после 40: цикл, приливы, сон или уровень энергии. Судя по тому, что вы отметили, больше всего мешает не какой-то один симптом, а ощущение, что тело стало работать по непонятным правилам.',
+      meaning:'В этот период симптомы часто идут вместе и усиливают друг друга: хуже сон — меньше ресурса днём, меньше ресурса — острее реакция на приливы и перепады настроения. Поэтому начинать разумнее не с того, что громче всего беспокоит, а с того, что влияет на остальное.',
+      today:'Выберите время отбоя и в ближайшие две недели ложитесь в одно и то же время — даже если заснуть удаётся не сразу.',
+      markers:[
+        { q:'Как вы сейчас спите?', lv:['Просыпаюсь почти каждую ночь','Иногда','Сплю нормально'] },
+        { q:'Сколько энергии днём?', lv:['Её почти нет','К вечеру заканчивается','Хватает на день'] },
+        { q:'Приливы или потливость', lv:['Часто','Иногда','Почти нет'] }
+      ] },
+  B:{ title:'Опора и комфорт',
+      mirror:'По вашим ответам на первый план вышло то, что женщины обычно не обсуждают вслух — и из-за этого кажется, что так только у вас. Это не так. И это не та плата за возраст, которую нужно молча принять.',
+      meaning:'Такие изменения после 40 очень распространены, и при этом они не являются обязательным следствием возраста или родов. Важно другое: универсальное «делайте упражнения Кегеля» подходит не каждой ситуации. При одних состояниях мышцы нужно учить сокращаться, при других — наоборот расслаблять, и если угадать неправильно, станет хуже. Поэтому начинать стоит не с силы, а с дыхания: оно безопасно в обоих случаях.',
+      today:'Лягте на спину, согните колени, ладонь на живот. Дышите 5 минут так, чтобы поднимался живот, а не грудная клетка. Ничего не сжимайте и не втягивайте.',
+      markers:[
+        { q:'Срочные позывы в туалет днём', lv:['Часто','Иногда','Почти нет'] },
+        { q:'Ощущение опоры внизу живота', lv:['Его нет','Иногда есть','Есть'] },
+        { q:'Ночные просыпания', lv:['Каждую ночь','Иногда','Почти нет'] }
+      ] },
+  C:{ title:'Система и движение',
+      mirror:'У вас отмечено сразу несколько направлений. Это тот случай, когда ещё один совет только добавляет хаоса: одно упражнение для таза, другое для сна, третье для суставов — а целой картины по-прежнему нет.',
+      meaning:'Когда беспокоит несколько вещей сразу, самая частая ошибка — пытаться делать всё полезное одновременно. Через две недели не делается ничего, и вдобавок появляется чувство вины. Работает обратное: выбрать один-два приоритета и определить последовательность — что сейчас, что затем, что уходит на поддержание.',
+      today:'Выпишите всё, что беспокоит, и отметьте одно — то, что сильнее всего мешает жить. Остальное на две недели сознательно откладывается.',
+      markers:[
+        { q:'Сколько тем беспокоит одновременно', lv:['Три и больше','Две','Одна'] },
+        { q:'Утренняя скованность', lv:['Каждое утро','Иногда','Почти нет'] },
+        { q:'Есть ли понятная последовательность действий', lv:['Нет совсем','Примерно','Да'] }
+      ] }
 };
 
-var CARD_PROMISE = [
-  'Ваш коридор безопасности: что вам можно, что с осторожностью и что стоит обсудить с врачом до начала практик',
-  'Практический минимум на 14 дней: 2–3 действия по 10–15 минут, подобранные под ваши ответы',
-  'Три маркера, по которым через две недели будет видно, работает маршрут или его надо менять'
-];
+/* Полная карта для печати. Общая часть + профильная. */
+var CARD_COMMON =
+  '<h4>Ваш коридор безопасности</h4>'+
+  '<p><b>Можно уже сегодня:</b> диафрагмальное дыхание лёжа, ходьба в комфортном темпе, одно и то же время отбоя.</p>'+
+  '<p><b>Сначала к врачу, не откладывая:</b> кровотечение после года без менструаций, боль, новый быстро нарастающий симптом.</p>'+
+  '<h4>Чего в этом формате подобрать нельзя</h4>'+
+  '<p>Какие именно упражнения нужны вам. Это определяется на осмотре, а не по ответам в тесте. Всё, что здесь есть, безопасно при любом из двух вариантов — но это начало, а не подбор.</p>';
+var CARD_NORMAL_EXTRA =
+  '<h4>С осторожностью</h4>'+
+  '<p>Упражнения на пресс, подъём тяжестей, прыжки и бег — пока вы не знаете свою ситуацию с мышцами.</p>';
+var CARD_CAUTION_EXTRA =
+  '<h4>Пока не делаем совсем</h4>'+
+  '<p>Упражнения на пресс, планка, подъём тяжестей, прыжки, любые «универсальные комплексы» из интернета. Это не осторожность ради осторожности: по вашим ответам универсальный комплекс может навредить.</p>'+
+  '<h4>Обсудить с лечащим врачом до начала</h4>'+
+  '<p>Можно ли вам нагрузку и какие положения для вас безопасны. Силовых упражнений в вашей карте нет намеренно — они появятся только после того, как станет понятно, что вам можно.</p>';
+var CARD_PREP =
+  '<h4>Как подготовиться к приёму</h4>'+
+  '<p>Запишите за 3–5 дней до визита:</p>'+
+  '<ol><li>Когда симптом появился впервые и как менялся.</li><li>Как часто и в какое время суток.</li>'+
+  '<li>Что усиливает и что облегчает.</li><li>Какие лекарства и добавки вы принимаете — списком.</li>'+
+  '<li>Была ли гормональная терапия и когда.</li></ol>'+
+  '<h4>Что спросить у врача</h4>'+
+  '<ol><li>Какие обследования нужны именно в моём случае и в каком порядке.</li>'+
+  '<li>Что из моих симптомов требует контроля по срокам.</li>'+
+  '<li>Можно ли мне физическую нагрузку и какая именно противопоказана.</li></ol>'+
+  '<p>Этот список не заменяет приём. Он нужен, чтобы за 15 минут в кабинете вы успели сказать главное.</p>';
 
-/* ---------------- НАСТРОЙКИ ИНТЕГРАЦИИ ----------------
-   Заменить на боевые значения перед запуском.
-   Telegram: start-параметр максимум 64 символа, алфавит A-Za-z0-9_-
-   MAX:      start-параметр максимум 128 символов
-   VK:       лимит ref в документации не зафиксирован — проверить на боевом боте
-   Payload спроектирован под самое узкое ограничение: 22 символа, только [0-9a-z]  */
-var BOTS = {
-  tg:  { label:'Telegram',   url:function(p){ return 'https://t.me/BOTNAME?start=' + p; } },
-  vk:  { label:'ВКонтакте',  url:function(p){ return 'https://vk.me/CLUBNAME?ref=' + p + '&ref_source=quiz'; } },
-  max: { label:'MAX',        url:function(p){ return 'https://max.ru/BOTNAME?start=' + p; } }
-};
-
-/* ---------------- СОСТОЯНИЕ ---------------- */
-var answers = {};
-var idx = 0;
+/* ==========================================================================
+   СОСТОЯНИЕ И ИСТОЧНИК
+   ========================================================================== */
+var A = {};              /* ответы */
+var MK = {};             /* стартовые значения маркеров */
+var idx = 0;             /* индекс текущего вопроса в QUESTIONS */
+var screenName = 'entry';
 var SESSION = '';
+var SRC = {};
+var EMBED = false;
+var started = false;
+var isPreview = false;    /* ?preview=... — ничего не трекаем и не отправляем */
 
-/* Ключ склейки: один и тот же id уходит и в аналитику, и в payload бота.
-   Позволяет соединить анонимный ответ на квизе с лидом в CRM. */
+var $ = function(id){ return document.getElementById(id); };
+var esc = function(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+
+function qs(){
+  var out = {}, s = window.location.search.replace(/^\?/,'');
+  if(!s) return out;
+  s.split('&').forEach(function(pair){
+    var kv = pair.split('=');
+    if(kv[0]) out[decodeURIComponent(kv[0])] = decodeURIComponent((kv[1]||'').replace(/\+/g,' '));
+  });
+  return out;
+}
+
 function newSession(){
   var s = '', a = '0123456789abcdefghijklmnopqrstuvwxyz';
   for(var i=0;i<6;i++) s += a.charAt(Math.floor(Math.random()*36));
   return s;
 }
 
-/* Заглушка аналитики. На бою заменить на ym(ID,'reachGoal',name,params)
-   или ym(ID,'params',params). Персональные данные сюда не передаём. */
+function readSource(){
+  var p = qs();
+  EMBED = (p.embed === '1' || p.embed === 'true');
+  SRC = {
+    src:      p.src || p.utm_source || '',
+    medium:   p.utm_medium || '',
+    campaign: p.utm_campaign || '',
+    content:  p.utm_content || '',
+    term:     p.utm_term || '',
+    topic:    (p.topic && TOPICS[p.topic]) ? p.topic : '',
+    article:  p.article || '',
+    embed:    EMBED ? 1 : 0,
+    ref:      document.referrer || '',
+    landing:  window.location.href.split('#')[0]
+  };
+  if(EMBED) document.body.className += ' embed';
+}
+
+/* ==========================================================================
+   АНАЛИТИКА И ОТПРАВКА
+   Три числа, за которыми надо следить:
+     1) quiz_view  -> quiz_start          (вход дочитан, тест начат)
+     2) quiz_start -> quiz_complete       (прошла до результата)
+     3) quiz_complete -> quiz_cta_*       (ушла в мессенджер)
+   Плюс quiz_q_<id> по каждому вопросу: видно, на каком именно отваливается.
+   ========================================================================== */
 function track(name, params){
-  if(window.console && console.log) console.log('[track]', name, params || {});
+  var pl = params || {};
+  pl.topic = SRC.topic; pl.src = SRC.src; pl.embed = SRC.embed;
+  try{
+    if(CFG.ymId && window.ym) window.ym(CFG.ymId, 'reachGoal', name, pl);
+    if(window.gtag) window.gtag('event', name, pl);
+    if(window.dataLayer && window.dataLayer.push) window.dataLayer.push({ event:name, quiz:pl });
+  }catch(e){}
+  if(window.console && console.log) console.log('[track]', name, pl);
 }
 
-var $ = function(id){ return document.getElementById(id); };
-var el = function(tag, cls){ var n = document.createElement(tag); if(cls) n.className = cls; return n; };
-
-function show(id){
-  var list = document.querySelectorAll('.screen');
-  for(var i=0;i<list.length;i++) list[i].classList.remove('on');
-  $(id).classList.add('on');
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-/* ---------------- ПРОГРЕСС ---------------- */
-function buildProgress(){
-  var p = $('prog'); p.innerHTML='';
-  for(var i=0;i<QUESTIONS.length;i++) p.appendChild(el('i'));
-}
-function paintProgress(){
-  var bars = $('prog').children;
-  for(var i=0;i<bars.length;i++){
-    bars[i].className = i < idx ? 'done' : (i === idx ? 'now' : '');
-  }
-  $('stepnum').textContent = 'Вопрос ' + (idx+1) + ' из ' + QUESTIONS.length;
-}
-
-/* ---------------- ОТРИСОВКА ВОПРОСА ---------------- */
-var TICK = '<svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.2 3.2L11 1.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-
-function render(){
-  var q = QUESTIONS[idx];
-  paintProgress();
-  $('qtext').textContent = q.q;
-  $('qhint').textContent = q.hint || '';
-  $('qhint').style.display = q.hint ? 'block' : 'none';
-  $('back').style.visibility = idx === 0 ? 'hidden' : 'visible';
-
-  var cur = answers[q.id];
-  if(q.type === 'multi' && !Array.isArray(cur)) cur = [];
-
-  var box = $('opts'); box.innerHTML = '';
-  q.opts.forEach(function(text){
-    var o = el('div','opt');
-    o.setAttribute('tabindex','0');
-    o.setAttribute('role', q.type === 'multi' ? 'checkbox' : 'radio');
-    var m = el('span','mark ' + (q.type === 'multi' ? 'square' : 'round'));
-    m.innerHTML = TICK;
-    var t = el('span'); t.textContent = text;
-    o.appendChild(m); o.appendChild(t);
-
-    var isSel = q.type === 'multi' ? cur.indexOf(text) > -1 : cur === text;
-    if(isSel) o.classList.add('sel');
-    o.setAttribute('aria-checked', isSel ? 'true' : 'false');
-
-    function choose(){
-      if(q.type === 'single'){
-        answers[q.id] = text;
-        render();
-        setTimeout(goNext, 260);
-        return;
-      }
-      var arr = Array.isArray(answers[q.id]) ? answers[q.id].slice() : [];
-      var excl = q.exclusive || [];
-      var pos = arr.indexOf(text);
-      if(pos > -1){
-        arr.splice(pos,1);
-      } else {
-        if(excl.indexOf(text) > -1){
-          arr = [text];
-        } else {
-          arr = arr.filter(function(x){ return excl.indexOf(x) === -1; });
-          if(q.max && arr.length >= q.max) return;
-          arr.push(text);
-        }
-      }
-      answers[q.id] = arr;
-      render();
+/* Отправка на релей. Персональных данных нет — только ответы и метки.
+   Релей на своей стороне пишет в SalesBot/GetCourse (контракт — в README.md). */
+function send(event, extra){
+  var body = {
+    session: SESSION,
+    event: event,
+    ts: Math.round(Date.now()/1000),
+    source: SRC,
+    answers: A,
+    markers: MK,
+    derived: derive()
+  };
+  if(extra) for(var k in extra) if(extra.hasOwnProperty(k)) body[k] = extra[k];
+  if(!CFG.relay) return;
+  try{
+    if(navigator.sendBeacon){
+      navigator.sendBeacon(CFG.relay, new Blob([JSON.stringify(body)], {type:'application/json'}));
+    }else{
+      fetch(CFG.relay, { method:'POST', mode:'cors', keepalive:true,
+        headers:{'Content-Type':'application/json'}, body:JSON.stringify(body) });
     }
-
-    o.addEventListener('click', choose);
-    o.addEventListener('keydown', function(e){
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); choose(); }
-    });
-    box.appendChild(o);
-  });
-
-  // счётчик и блокировка лишних вариантов
-  var c = $('counter');
-  if(q.type === 'multi' && q.max){
-    var n = Array.isArray(answers[q.id]) ? answers[q.id].length : 0;
-    c.textContent = n ? ('Выбрано ' + n + ' из ' + q.max) : '';
-    if(n >= q.max){
-      var nodes = box.children;
-      for(var i=0;i<nodes.length;i++){
-        if(!nodes[i].classList.contains('sel')) nodes[i].classList.add('dim');
-      }
-    }
-  } else { c.textContent = ''; }
-
-  var ok = q.type === 'multi'
-    ? (Array.isArray(answers[q.id]) && answers[q.id].length > 0)
-    : !!answers[q.id];
-  $('next').disabled = !ok;
-  $('next').textContent = idx === QUESTIONS.length - 1 ? 'Показать результат' : 'Далее';
+  }catch(e){}
 }
 
-function goNext(){
-  var q = QUESTIONS[idx];
-  var ok = q.type === 'multi'
-    ? (Array.isArray(answers[q.id]) && answers[q.id].length > 0)
-    : !!answers[q.id];
-  if(!ok) return;
-  if(idx < QUESTIONS.length - 1){ idx++; render(); }
-  else { finish(); }
+function step(name, params, relayEvent){
+  if(isPreview) return;
+  track(name, params);
+  send(relayEvent || name, params ? {meta:params} : null);
 }
 
-/* ---------------- ЛОГИКА ВЕТВЛЕНИЯ ---------------- */
-var CAUTION_HIGH = ['Операции за последний год','Установленное опущение или пролапс','Головокружения','Не уверена'];
-var CAUTION_MILD = ['Проблемы со спиной, грыжи','Повышенное давление'];
+/* ==========================================================================
+   ВОЗВРАТ К НЕЗАКОНЧЕННОМУ ПРОХОЖДЕНИЮ
+   ========================================================================== */
+var LS = 'kzhz_quiz_v2';
+function save(){
+  try{
+    localStorage.setItem(LS, JSON.stringify({
+      s:SESSION, a:A, i:idx, sc:screenName, mk:MK, t:Date.now(), src:SRC
+    }));
+  }catch(e){}
+}
+function load(){
+  try{
+    var raw = localStorage.getItem(LS); if(!raw) return null;
+    var d = JSON.parse(raw);
+    if(!d || !d.t || (Date.now() - d.t) > CFG.resumeDays*864e5){ localStorage.removeItem(LS); return null; }
+    return d;
+  }catch(e){ return null; }
+}
+function clearSave(){ try{ localStorage.removeItem(LS); }catch(e){} }
 
+/* ==========================================================================
+   ЛОГИКА: ПРОФИЛЬ, РЕДАКЦИЯ, БЕЗОПАСНОСТЬ
+   ========================================================================== */
 function computeProfile(){
-  var p = answers.PRIMARY, profile;
-  if(p === 'Приливы и цикл') profile = 'P40';
-  else if(p === 'Сон и энергия') profile = 'ENERGY';
-  else if(p === 'Тазовое дно и мочеиспускание') profile = 'PELVIC';
-  else if(p === 'Интимный комфорт') profile = 'INTIMATE';
-  else if(p === 'Движение и скованность') profile = 'MOVE';
-  else if(p === 'Несколько тем сразу') profile = 'SYSTEM';
-  else profile = 'MAINTAIN';
+  var sc = {A:0,B:0,C:0};
+  var pr = A.PRIMARY;
+  if(pr==='Приливы и цикл' || pr==='Сон и энергия') sc.A += 3;
+  if(pr==='Тазовое дно и мочеиспускание' || pr==='Интимный комфорт') sc.B += 3;
+  if(pr==='Движение и скованность' || pr==='Несколько тем сразу') sc.C += 3;
 
-  // SYSTEM имеет приоритет только при прямом сигнале
-  if(p === 'Несколько тем сразу') profile = 'SYSTEM';
-  else if(answers.SYSTEM_NEED === 'Да, именно так' && answers.INTENT === 'Собрать систему') profile = 'SYSTEM';
+  var sg = A.SIGNAL || [];
+  sg.forEach(function(s){
+    if(s==='Цикл' || s==='Приливы и потливость' || s==='Сон' || s==='Энергия и настроение') sc.A += 1;
+    if(s==='Мочеиспускание и таз' || s==='Сухость и интимный дискомфорт') sc.B += 1;
+    if(s==='Движение и суставы') sc.C += 1;
+  });
+  if(sg.length >= 3) sc.C += 1;
+  if(A.SYSTEM_NEED === 'Да, именно так') sc.C += 1;
+  if(A.INTENT === 'Собрать систему') sc.C += 1;
 
-  if(p === 'В целом чувствую себя хорошо' && answers.INTENT === 'Поддерживать достигнутый результат') profile = 'MAINTAIN';
-  return profile;
+  var best = 'A';
+  if(sc.B > sc[best]) best = 'B';
+  if(sc.C > sc[best]) best = 'C';
+  return best;
 }
 
-function groupOf(profile){
-  if(profile === 'P40' || profile === 'ENERGY') return 'A';
-  if(profile === 'PELVIC' || profile === 'INTIMATE') return 'B';
-  return 'C';
+var CAUTION_FLAGS = ['Операции за последний год','Проблемы со спиной, грыжи','Повышенное давление','Установленное опущение или пролапс','Головокружения','Не уверена'];
+function edition(){
+  var l = A.LIMITS || [];
+  for(var i=0;i<l.length;i++) if(CAUTION_FLAGS.indexOf(l[i]) >= 0) return 'caution';
+  return 'normal';
+}
+function safetyStop(){ return A.SAFETY === 'Да' || A.SAFETY === 'Не уверена'; }
+
+function derive(){
+  if(!A.PRIMARY) return {};
+  return {
+    profile: computeProfile(),
+    edition: edition(),
+    safety: safetyStop() ? 1 : 0,
+    answered: Object.keys(A).length,
+    of: TOTAL
+  };
 }
 
-function limitsLevel(){
-  var l = Array.isArray(answers.LIMITS) ? answers.LIMITS : [];
-  for(var i=0;i<l.length;i++) if(CAUTION_HIGH.indexOf(l[i]) > -1) return 'high';
-  for(var j=0;j<l.length;j++) if(CAUTION_MILD.indexOf(l[j]) > -1) return 'mild';
-  return 'none';
+function b36(n){ return '0123456789abcdefghijklmnopqrstuvwxyz'.charAt(Math.max(0, Math.min(35, n|0))); }
+function optIdx(id, val){
+  var q = null;
+  QUESTIONS.forEach(function(x){ if(x.id===id) q = x; });
+  if(!q) return 0;
+  var i = q.opts.indexOf(val);
+  return i < 0 ? 35 : i;
 }
 
-/* ---------------- PAYLOAD ДЛЯ БОТОВ ----------------
-   Фиксированные позиции, алфавит [0-9a-z], 22 символа.
-   0     версия схемы
-   1     возрастной этап
-   2     главный запрос
-   3-4   битовая маска «что изменилось»
-   5     влияние на жизнь
-   6     нужна ли система
-   7     что нужнее всего
-   8-9   битовая маска ограничений
-   10    safety
-   11    желаемый результат
-   12    профиль
-   13    группа карты
-   14    редакция карты
-   15    источник трафика
-   16-21 session id
-   Бот доверяет полям 12-14 и не дублирует логику ветвления,
-   но может пересчитать их из полей 1-11 для проверки. */
-var PROFILE_CODES = ['P40','ENERGY','PELVIC','INTIMATE','MOVE','SYSTEM','MAINTAIN'];
-
-function b36(n, len){
-  var s = Math.max(0, n).toString(36);
-  while(s.length < len) s = '0' + s;
-  return s.slice(-len);
-}
-function maskOf(qIndex, key){
-  var q = QUESTIONS[qIndex], sel = answers[key] || [], m = 0;
-  for(var i=0;i<q.opts.length;i++) if(sel.indexOf(q.opts[i]) > -1) m |= (1 << i);
-  return m;
-}
-function sourceCode(){
-  // На бою берём из ?utm_source= или ?s= в адресе страницы.
-  var m = /[?&]s=([0-9a-z])/.exec(window.location.search || '');
-  return m ? m[1] : '0';
-}
-function buildPayload(profile, group, lvl){
-  return '1'
-    + b36(QUESTIONS[0].opts.indexOf(answers.AGE_STAGE), 1)
-    + b36(QUESTIONS[1].opts.indexOf(answers.PRIMARY), 1)
-    + b36(maskOf(2,'SIGNAL'), 2)
-    + b36(QUESTIONS[3].opts.indexOf(answers.IMPACT), 1)
-    + b36(QUESTIONS[4].opts.indexOf(answers.SYSTEM_NEED), 1)
-    + b36(QUESTIONS[5].opts.indexOf(answers.INTENT), 1)
-    + b36(maskOf(6,'LIMITS'), 2)
-    + b36(QUESTIONS[7].opts.indexOf(answers.SAFETY), 1)
-    + b36(QUESTIONS[8].opts.indexOf(answers.DESIRED), 1)
-    + b36(PROFILE_CODES.indexOf(profile), 1)
-    + group.toLowerCase()
-    + (lvl === 'high' ? '2' : (lvl === 'mild' ? '1' : '0'))
-    + sourceCode()
+/* Payload в бота. 17 символов, алфавит [0-9a-z] — укладывается в самый узкий
+   лимит из трёх мессенджеров (Telegram: 64, MAX: 128, VK: не зафиксирован). */
+function buildPayload(){
+  var d = derive();
+  return 'v2'
+    + d.profile.toLowerCase()
+    + (d.edition === 'caution' ? 'c' : 'n')
+    + (d.safety ? '1' : '0')
+    + b36(optIdx('AGE_STAGE', A.AGE_STAGE))
+    + b36(optIdx('IMPACT', A.IMPACT))
+    + b36(optIdx('INTENT', A.INTENT))
+    + b36(MK.m1 == null ? 9 : MK.m1)
+    + b36(MK.m2 == null ? 9 : MK.m2)
+    + b36(MK.m3 == null ? 9 : MK.m3)
     + SESSION;
 }
 
-/* Блок выбора мессенджера. Один шаг воронки, три входа. */
-function messengerBlock(payload, title, note){
-  var wrap = el('div','mess');
-  var h = el('div','mess-title'); h.textContent = title;
-  wrap.appendChild(h);
-  var row = el('div','mess-row');
-  ['tg','vk','max'].forEach(function(k){
-    var b = el('a','messbtn');
-    b.textContent = BOTS[k].label;
-    b.href = BOTS[k].url(payload);
-    b.setAttribute('rel','noopener');
-    b.addEventListener('click', function(e){
-      e.preventDefault();
-      track('quiz_to_bot', { messenger:k, session:SESSION });
-      b.textContent = 'В прототипе не активна';
-      b.classList.add('done');
-    });
-    row.appendChild(b);
-  });
-  wrap.appendChild(row);
-  if(note){ var n = el('p','fineprint'); n.textContent = note; wrap.appendChild(n); }
-  return wrap;
+/* ==========================================================================
+   РЕНДЕР
+   ========================================================================== */
+function postHeight(){
+  if(!EMBED || !window.parent || window.parent === window) return;
+  try{
+    window.parent.postMessage({ type:'kzhz-quiz-height', height:document.body.scrollHeight }, '*');
+  }catch(e){}
+}
+function paint(html){
+  $('stage').innerHTML = html;
+  document.body.className = (EMBED ? 'embed ' : '') + (screenName === 'entry' ? '' : 'running');
+  $('resetbtn').style.display = (started && screenName !== 'entry' && !EMBED) ? 'block' : 'none';
+  if(screenName !== 'entry' && !EMBED) window.scrollTo({ top:0, behavior:'smooth' });
+  postHeight();
 }
 
-/* ---------------- РЕЗУЛЬТАТ ---------------- */
-function finish(){
-  var profile = computeProfile();
-  var group = groupOf(profile);
-  var lvl = limitsLevel();
-  var safety = answers.SAFETY;
-  var body = $('result-body');
-  body.innerHTML = '';
+/* ---------- экран входа ---------- */
+function renderEntry(){
+  screenName = 'entry';
+  var t = SRC.topic ? TOPICS[SRC.topic] : null;
+  var h = '';
 
-  var payload = buildPayload(profile, group, lvl);
+  if(t){
+    /* Органика: она только что прочитала статью по теме. Тему не пересказываем,
+       продаём не тему, а точность — и имя эксперта. */
+    h += '<div class="entry">';
+    h += '<span class="ctx">Вы читали ' + esc(t.read) + '</span>';
+    h += '<h2>В статье — общая картина. Тест покажет, что из неё относится к вам</h2>';
+    h += '<p class="hook">Девять вопросов. На выходе — <b>одно действие, безопасное именно при ваших ответах</b>, и отдельная проверка, нет ли среди них того, с чем сначала нужно к врачу.</p>';
+  }else{
+    /* Платный холодный трафик: сначала снимаем вину за прошлые неудачи. */
+    h += '<div class="entry">';
+    h += '<h2>Если практики из интернета вам не помогли — скорее всего, дело не в вас</h2>';
+    h += '<p class="hook">Одни и те же упражнения при разных состояниях дают разный результат. Самый известный пример — Кегель: при слабых мышцах он помогает, при перенапряжённых делает хуже. <b>Поэтому порядок действий важнее самих действий.</b></p>';
+    h += '<p class="hook">Тест на 9 вопросов показывает, какая группа изменений выходит у вас на первый план и с чего безопасно начинать.</p>';
+  }
 
-  if(safety === 'Да'){
-    renderSafetyStop(body, payload);
-    track('quiz_done', { profile:profile, group:group, safety:'yes', session:SESSION });
-    fillDev(profile, group, lvl, 'STOP', payload);
-    show('s-result');
+  h += '<div class="deal">';
+  h += '<div><i>✓</i><span>9 вопросов, около 2 минут</span></div>';
+  h += '<div><i>✓</i><span>Без регистрации. Результат — на этой же странице, сразу</span></div>';
+  h += '<div><i>✓</i><span>Отдельная проверка безопасности: если ответ тревожный, программу не покажем и отправим к врачу</span></div>';
+  h += '</div>';
+
+  h += '<div class="trust"><div class="ava"></div><div>';
+  h += '<b>Наталья Бутолина</b>';
+  h += '<span class="ph" data-ph="regalia">Здесь — специализация, стаж и 1–2 факта практики. Без обещаний результата: только кто она и чем занимается.</span>';
+  h += '</div></div>';
+
+  h += '<div class="nav"><button class="btn wide" id="go">Начать · 2 минуты</button></div>';
+  h += '<p class="fine">Материал образовательный. Не устанавливает диагноз, не назначает лечение и не заменяет консультацию врача.</p>';
+  h += '</div>';
+
+  paint(h);
+  $('go').onclick = function(){
+    started = true;
+    idx = 0;
+    step('quiz_start');
+    if(SRC.topic && TOPICS[SRC.topic]) A.PRIMARY = TOPICS[SRC.topic].primary;
+    renderQuestion();
+  };
+}
+
+/* ---------- вопрос ---------- */
+function renderQuestion(){
+  screenName = 'q';
+  var q = QUESTIONS[idx];
+  var h = '';
+
+  h += '<div class="rail">';
+  for(var i=0;i<TOTAL;i++) h += '<i class="' + (i<idx?'done':(i===idx?'now':'')) + '"></i>';
+  h += '</div>';
+  h += '<div class="stepline"><span>Вопрос <b>' + (idx+1) + '</b> из ' + TOTAL + '</span>'
+     + '<span>' + (idx < EASY.length ? 'общая часть' : 'уточнение под вас') + '</span></div>';
+
+  h += '<div class="q">' + esc(q.q) + '</div>';
+  if(q.hint) h += '<p class="hint">' + esc(q.hint) + '</p>';
+  if(q.why) h += '<div class="why"><b>' + esc(q.why.t) + '</b>' + esc(q.why.p) + '</div>';
+
+  h += '<div class="opts" id="opts"></div>';
+  h += '<div class="nav">';
+  if(idx > 0) h += '<button class="back" id="back">Назад</button>';
+  h += '<button class="btn" id="next" disabled>Дальше</button>';
+  h += '</div>';
+
+  paint(h);
+  buildOpts(q);
+  if($('back')) $('back').onclick = function(){
+    if(idx === EASY.length){ renderMicro(); return; }
+    idx--; renderQuestion();
+  };
+  $('next').onclick = function(){ advance(q); };
+  track('quiz_q_view', { q:q.id, n:idx+1 });
+}
+
+function buildOpts(q){
+  var box = $('opts');
+  box.innerHTML = '';
+  var chosen = A[q.id];
+  if(q.type === 'multi' && !chosen) chosen = [];
+
+  q.opts.forEach(function(o){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'opt' + (q.type==='multi' ? ' multi' : '');
+    b.innerHTML = '<span class="box"></span><span>' + esc(o) + '</span>';
+    b.onclick = function(){
+      if(q.type === 'single'){
+        A[q.id] = o;
+        buildOpts(q);
+        /* одиночный выбор — сразу дальше, без лишнего тапа */
+        setTimeout(function(){ advance(q); }, 170);
+      }else{
+        var cur = A[q.id] || [];
+        var isEx = q.exclusive && q.exclusive.indexOf(o) >= 0;
+        if(cur.indexOf(o) >= 0){
+          cur = cur.filter(function(x){ return x !== o; });
+        }else if(isEx){
+          cur = [o];
+        }else{
+          cur = cur.filter(function(x){ return !(q.exclusive && q.exclusive.indexOf(x) >= 0); });
+          if(!q.max || cur.length < q.max) cur = cur.concat([o]);
+        }
+        A[q.id] = cur;
+        buildOpts(q);
+      }
+    };
+    var on = (q.type === 'multi') ? (chosen.indexOf(o) >= 0) : (chosen === o);
+    if(on) b.className += ' on';
+    if(q.type === 'multi' && q.max && chosen.length >= q.max && !on
+       && !(q.exclusive && q.exclusive.indexOf(o) >= 0)) b.className += ' off';
+    box.appendChild(b);
+  });
+
+  var ok = (q.type === 'multi') ? ((A[q.id]||[]).length > 0) : !!A[q.id];
+  if($('next')) $('next').disabled = !ok;
+}
+
+function advance(q){
+  /* защита от двойного перехода: автопереход по тапу и кнопка «Дальше»
+     могут сработать в одном окне времени */
+  if(screenName !== 'q' || QUESTIONS[idx] !== q) return;
+  var ok = (q.type === 'multi') ? ((A[q.id]||[]).length > 0) : !!A[q.id];
+  if(!ok) return;
+  step('quiz_q_answer', { q:q.id, n:idx+1 }, 'partial');
+  save();
+  if(idx === EASY.length - 1){ renderMicro(); return; }
+  if(idx === TOTAL - 1){ renderResult(); return; }
+  idx++;
+  renderQuestion();
+}
+
+/* ---------- микро-результат: плата за интимные вопросы ---------- */
+function renderMicro(){
+  screenName = 'micro';
+  var p = computeProfile();
+  var m = MICRO[p];
+  var h = '';
+
+  h += '<span class="tag">Предварительно, по трём ответам</span>';
+  h += '<div class="mr">';
+  h += '<h2>' + esc(m.title) + '</h2>';
+  h += '<p>' + esc(m.body) + '</p>';
+  h += '<div class="todo"><b>Что можно сделать уже сегодня</b><p>' + esc(m.todo) + '</p></div>';
+  h += '<div class="gate"><b>Дальше — 6 вопросов, и они другие</b>';
+  h += '<p>Они про ограничения и самочувствие. Нужны они для одного: чтобы не дать вам то, что в вашем случае может навредить. Среди них есть вопрос про тревожные симптомы — если вы ответите «да», программу мы не покажем вовсе.</p>';
+  h += '<p>Отвечайте как есть. Контакты мы не спрашиваем, результат остаётся на этой странице.</p></div>';
+  h += '<div class="nav"><button class="btn wide" id="deep">Уточнить под меня · 6 вопросов</button></div>';
+  h += '<button class="quiet" id="enough">Мне пока хватит этого</button>';
+  h += '</div>';
+
+  paint(h);
+  step('quiz_micro', { profile:p });
+  $('deep').onclick = function(){ step('quiz_deep_start'); idx = EASY.length; renderQuestion(); };
+  $('enough').onclick = function(){ renderLight(p); };
+}
+
+/* ---------- облегчённый выход: она не пошла в интимную часть ---------- */
+function renderLight(p){
+  screenName = 'light';
+  var m = MICRO[p];
+  var h = '';
+  h += '<span class="tag">Ваша общая картина</span>';
+  h += '<div class="mr"><h2>' + esc(m.title) + '</h2>';
+  h += '<div class="todo"><b>Начните с этого</b><p>' + esc(m.todo) + '</p></div>';
+  h += '<p>Полную карту — что можно, что с осторожностью и что требует врача — мы не отдаём по трём ответам. Не из вредности: без вопроса про ограничения можно предложить то, что вам навредит.</p>';
+  h += '<div class="nav"><button class="btn wide" id="reopen">Ответить на 6 вопросов и получить карту</button></div>';
+  h += '<p class="fine">Если сейчас не хочется — ничего страшного. Действие выше работает само по себе и безопасно при любых ограничениях.</p>';
+  h += '</div>';
+  paint(h);
+  step('quiz_early_exit', { profile:p });
+  $('reopen').onclick = function(){ step('quiz_deep_start', {from:'light'}); idx = EASY.length; renderQuestion(); };
+}
+
+/* ---------- результат ---------- */
+function renderResult(){
+  if(safetyStop()){ renderStop(); return; }
+  screenName = 'result';
+  var p = computeProfile(), ed = edition(), R = RESULTS[p];
+  var h = '';
+
+  h += '<span class="tag rose">Ваш профиль</span>';
+  h += '<div class="res">';
+  h += '<h2>' + esc(R.title) + '</h2>';
+  h += '<p>' + esc(R.mirror) + '</p>';
+
+  if(ed === 'caution'){
+    h += '<div class="alert warn"><b>Ваша карта — в осторожной редакции</b>'
+       + 'Вы отметили ограничения, которые важно учитывать при нагрузке. Силовые упражнения из вашей карты исключены, а раздел о границах расширен. Это не запрет на движение — это причина не давать вам универсальный комплекс.</div>';
+  }
+
+  h += '<div class="sect">Почему это идёт вместе</div><p>' + esc(R.meaning) + '</p>';
+  h += '<div class="todo"><b>Что можно сделать уже сегодня</b><p>' + esc(R.today) + '</p></div>';
+
+  h += '<div class="sect">Отметьте, как дела сейчас</div>';
+  h += '<p class="hint" style="margin-bottom:14px">Пятнадцать секунд. Через 14 дней мы пришлём вам эти же три вопроса с вашими сегодняшними ответами — и будет видно, работает маршрут или его надо менять. Без этого замера сравнивать будет не с чем.</p>';
+  h += '<div id="mkbox"></div>';
+
+  h += '<div class="sect">Полная карта</div>';
+  h += '<p>В карте: ваш коридор безопасности (что можно, что с осторожностью, что к врачу), практический минимум на 14 дней под ваши ответы и три маркера для проверки. Выберите, где вам удобнее читать.</p>';
+  h += '<div class="chans" id="chans"></div>';
+  h += '<p class="fine">Карта приходит сразу одним сообщением. Звонков нет. Отписаться — одной кнопкой.</p>';
+  if(CFG.allowPrint) h += '<button class="quiet" id="printbtn">Забрать карту без мессенджера — распечатать или сохранить в PDF</button>';
+  h += '</div>';
+
+  paint(h);
+  renderMarkers(p);
+  renderChans('card');
+  if($('printbtn')) $('printbtn').onclick = function(){ doPrint(p, ed); };
+  step('quiz_complete', { profile:p, edition:ed }, 'complete');
+  save();
+}
+
+/* ---------- стоп-сигнал: маркетинг выключен полностью ---------- */
+function renderStop(){
+  screenName = 'stop';
+  var unsure = (A.SAFETY === 'Не уверена');
+  var h = '';
+  h += '<span class="tag rose">Важно</span>';
+  h += '<div class="res"><h2>Сначала — безопасность</h2>';
+  h += '<div class="alert stop"><b>Практическую программу мы вам не покажем</b>'
+     + (unsure
+        ? 'Вы отметили, что не уверены насчёт тревожного симптома. В этой ситуации мы считаем правильным исходить из того, что нужна очная оценка: по ответам в тесте отличить одно от другого нельзя.'
+        : 'По одному из ваших ответов сейчас нужна очная медицинская оценка. Этот тест не предназначен для диагностики, поэтому направлять вас в программу практик до консультации было бы неправильно.')
+     + '</div>';
+  h += '<p><b>Что стоит сделать:</b> записаться к врачу и описать симптом так, как вы описали его здесь. Если симптом усиливается, есть боль или обильное кровотечение — не откладывайте визит.</p>';
+  h += '<div class="sect">Чем мы можем помочь сейчас</div>';
+  h += '<p>Материалом о подготовке к приёму: что записать за несколько дней до визита и какие вопросы задать, чтобы за пятнадцать минут в кабинете успеть сказать главное. Он бесплатный и ни к чему не обязывает — никаких программ и предложений в нём нет.</p>';
+  h += '<div class="chans" id="chans"></div>';
+  if(CFG.allowPrint) h += '<button class="quiet" id="printbtn">Открыть материал здесь — распечатать или сохранить в PDF</button>';
+  h += '<p class="fine">Если врач не найдёт ничего срочного — напишите нам, и мы соберём вашу карту уже как в обычном маршруте.</p>';
+  h += '</div>';
+
+  paint(h);
+  renderChans('prep');
+  if($('printbtn')) $('printbtn').onclick = function(){ doPrint(null, null, true); };
+  step('quiz_safety_stop', { answer:A.SAFETY }, 'safety_stop');
+  save();
+}
+
+/* ---------- маркеры: стартовый замер ---------- */
+function renderMarkers(p){
+  var box = $('mkbox'); if(!box) return;
+  box.innerHTML = '';
+  RESULTS[p].markers.forEach(function(m, i){
+    var key = 'm' + (i+1);
+    var w = document.createElement('div'); w.className = 'mk';
+    var t = document.createElement('div'); t.className = 'mkq'; t.textContent = m.q;
+    var lv = document.createElement('div'); lv.className = 'lv';
+    m.lv.forEach(function(label, j){
+      var b = document.createElement('button');
+      b.type = 'button'; b.textContent = label;
+      if(MK[key] === j) b.className = 'on';
+      b.onclick = function(){
+        MK[key] = j;
+        renderMarkers(p);
+        renderChans('card');
+        save();
+        if(MK.m1 != null && MK.m2 != null && MK.m3 != null) step('quiz_markers', null, 'markers');
+        postHeight();
+      };
+      lv.appendChild(b);
+    });
+    w.appendChild(t); w.appendChild(lv); box.appendChild(w);
+  });
+}
+
+/* ---------- три равные кнопки мессенджеров ---------- */
+function renderChans(kind){
+  var box = $('chans'); if(!box) return;
+  var payload = buildPayload();
+  box.innerHTML = '';
+  CFG.channels.forEach(function(c, i){
+    var a = document.createElement('a');
+    a.className = 'chan' + (i === 0 ? '' : ' alt');
+    a.href = c.url(payload);
+    a.rel = 'noopener';
+    a.target = '_blank';
+    a.textContent = (kind === 'prep' ? 'Материал для врача — в ' : 'Получить карту в ') + c.label;
+    a.onclick = function(){
+      step('quiz_cta_' + c.key, { channel:c.key, kind:kind, payload:payload }, 'cta');
+    };
+    box.appendChild(a);
+  });
+}
+
+/* ---------- печать / PDF ---------- */
+function doPrint(p, ed, prep){
+  var h = '';
+  if(prep){
+    h += '<h2>Как подготовиться к приёму врача</h2>' + CARD_PREP;
+  }else{
+    h += '<h2>' + esc(RESULTS[p].title) + ' — первые 14 дней</h2>';
+    h += '<p>' + esc(RESULTS[p].meaning) + '</p>';
+    h += '<h4>Начните с этого</h4><p>' + esc(RESULTS[p].today) + '</p>';
+    h += CARD_COMMON + (ed === 'caution' ? CARD_CAUTION_EXTRA : CARD_NORMAL_EXTRA);
+    h += '<h4>Три маркера — отметьте сегодня, сравните через 14 дней</h4><ol>';
+    RESULTS[p].markers.forEach(function(m){ h += '<li>' + esc(m.q) + '</li>'; });
+    h += '</ol>';
+  }
+  h += '<div class="pf">Наталья Бутолина · Код женского здоровья 40+ · код прохождения ' + SESSION
+     + '<br>Образовательный материал. Не устанавливает диагноз, не назначает лечение и не заменяет консультацию врача.</div>';
+  $('printcard').innerHTML = h;
+  step('quiz_print', { prep: prep ? 1 : 0 }, 'print');
+  window.print();
+}
+
+/* ==========================================================================
+   СТАРТ
+   ========================================================================== */
+/* Предпросмотр для команды и медицинской вычитки: ?preview=<ключ>
+   b-normal | b-caution | a-normal | a-caution | c-normal | stop | unsure | micro
+   Ничего не трекает и не отправляет — только показывает экран. */
+var PREVIEW = {
+  'b-normal': { AGE_STAGE:'46–55', PRIMARY:'Тазовое дно и мочеиспускание', SIGNAL:['Мочеиспускание и таз','Сон'], IMPACT:'Регулярно мешает', SYSTEM_NEED:'Иногда', INTENT:'Получить короткую практику', LIMITS:['Ограничений нет'], SAFETY:'Нет', DESIRED:'Меньше ограничений из-за таза' },
+  'b-caution':{ AGE_STAGE:'56–65', PRIMARY:'Тазовое дно и мочеиспускание', SIGNAL:['Мочеиспускание и таз'], IMPACT:'Сильно ограничивает', SYSTEM_NEED:'Да, именно так', INTENT:'Понять, что происходит', LIMITS:['Проблемы со спиной, грыжи'], SAFETY:'Нет', DESIRED:'Легче двигаться' },
+  'a-normal': { AGE_STAGE:'46–55', PRIMARY:'Приливы и цикл', SIGNAL:['Цикл','Приливы и потливость','Сон'], IMPACT:'Регулярно мешает', SYSTEM_NEED:'Иногда', INTENT:'Понять, что происходит', LIMITS:['Ограничений нет'], SAFETY:'Нет', DESIRED:'Лучше спать и больше энергии' },
+  'a-caution':{ AGE_STAGE:'56–65', PRIMARY:'Сон и энергия', SIGNAL:['Сон','Энергия и настроение'], IMPACT:'Замечаю, но справляюсь', SYSTEM_NEED:'Нет', INTENT:'Поддерживать достигнутый результат', LIMITS:['Повышенное давление'], SAFETY:'Нет', DESIRED:'Спокойнее пройти возрастные изменения' },
+  'c-normal': { AGE_STAGE:'46–55', PRIMARY:'Несколько тем сразу', SIGNAL:['Сон','Движение и суставы','Мочеиспускание и таз'], IMPACT:'Регулярно мешает', SYSTEM_NEED:'Да, именно так', INTENT:'Собрать систему', LIMITS:['Ограничений нет'], SAFETY:'Нет', DESIRED:'Наконец иметь понятную систему' },
+  'stop':     { AGE_STAGE:'56–65', PRIMARY:'Приливы и цикл', SIGNAL:['Цикл'], IMPACT:'Регулярно мешает', SYSTEM_NEED:'Иногда', INTENT:'Понять, что происходит', LIMITS:['Ограничений нет'], SAFETY:'Да', DESIRED:'Спокойнее пройти возрастные изменения' },
+  'unsure':   { AGE_STAGE:'46–55', PRIMARY:'Интимный комфорт', SIGNAL:['Сухость и интимный дискомфорт'], IMPACT:'Регулярно мешает', SYSTEM_NEED:'Иногда', INTENT:'Обсудить сложную ситуацию со специалистом', LIMITS:['Не уверена'], SAFETY:'Не уверена', DESIRED:'Комфортнее интимная жизнь' },
+  'micro':    { AGE_STAGE:'40–45', PRIMARY:'Тазовое дно и мочеиспускание', SIGNAL:['Мочеиспускание и таз'] }
+};
+
+function init(){
+  readSource();
+  var pv = qs().preview;
+  if(pv && PREVIEW[pv]){
+    isPreview = true;
+    SESSION = 'previe';
+    A = PREVIEW[pv]; started = true; idx = TOTAL - 1;
+    if(pv === 'micro') renderMicro(); else renderResult();
     return;
   }
 
-  track('quiz_done', { profile:profile, group:group, safety:(safety === 'Не уверена' ? 'uncertain' : 'no'),
-                       edition:lvl, session:SESSION });
+  var saved = (!EMBED) ? load() : null;
+  SESSION = (saved && saved.s) ? saved.s : newSession();
 
-  var r = RESULTS[group];
+  step('quiz_view', null, 'view');
+  renderEntry();
 
-  var tag = el('span','profile-tag'); tag.textContent = r.tag;
-  var h = el('h2','rt'); h.textContent = r.title;
-  body.appendChild(tag); body.appendChild(h);
-
-  if(safety === 'Не уверена'){
-    body.appendChild(alertBox('warn','Сначала уточним безопасность',
-      'По одному из ваших ответов стоит сначала обсудить симптом с врачом. Карту мы всё равно пришлём — но в осторожной редакции: с расширенным разделом о границах и без практического минимума до консультации. Так будет правильно.'));
+  /* Возврат к незаконченному: предложить продолжить, а не бросать в середину. */
+  if(saved && saved.a && saved.a.PRIMARY && saved.sc !== 'result' && saved.sc !== 'stop'){
+    var b = document.createElement('button');
+    b.className = 'btn wide'; b.style.marginTop = '10px';
+    b.textContent = 'Продолжить с вопроса ' + Math.min(TOTAL, (saved.i || 0) + 1);
+    b.onclick = function(){
+      A = saved.a; MK = saved.mk || {}; idx = saved.i || 0; started = true;
+      step('quiz_resume');
+      if(saved.sc === 'micro') renderMicro(); else renderQuestion();
+    };
+    var nav = $('stage').querySelector('.nav');
+    if(nav) nav.parentNode.insertBefore(b, nav.nextSibling);
+    postHeight();
   }
 
-  var m = el('div','mirror'); m.textContent = r.mirror;
-  body.appendChild(m);
+  $('resetbtn').onclick = function(){
+    clearSave(); A = {}; MK = {}; idx = 0; started = false;
+    SESSION = newSession();
+    renderEntry();
+  };
 
-  body.appendChild(sect('Что это значит'));
-  var p1 = el('p'); p1.style.margin = '0'; p1.textContent = r.meaning;
-  body.appendChild(p1);
-
-  if(answers.INTENT === 'Я уже давно лечусь и ищу, чем дополнить'){
-    body.appendChild(alertBox('note','Отдельно — о том, что вы уже лечитесь',
-      'Лечение сделало свою часть, и это не мало. Речь не о том, чтобы заменить то, что вы делаете, а о том, чего в этом наборе не хватало: ежедневного действия, которое врач назначить не может. Ничего из того, что вам назначено, менять не нужно.'));
-  }
-
-  if(lvl !== 'none'){
-    body.appendChild(alertBox('warn', 'Ваша карта придёт в осторожной редакции',
-      lvl === 'high'
-        ? 'Вы отметили ограничения, при которых часть практик подбирается индивидуально. В вашей карте раздел о границах будет расширен, а часть действий заменена на дыхание и ходьбу. Если вы не уверены в допустимости конкретной практики — обсудите её с лечащим врачом.'
-        : 'Вы отметили ограничения, которые важно учитывать при нагрузке. В вашей карте будет отдельный раздел о том, что делать с осторожностью и на что обращать внимание во время занятий.'));
-  }
-
-  body.appendChild(sect('Что можно сделать уже сегодня'));
-  var td = el('div','today'); var tp = el('p'); tp.textContent = r.today; td.appendChild(tp);
-  body.appendChild(td);
-
-  body.appendChild(sect('А в полной маршрутной карте будет то, чего здесь нет'));
-  var lk = el('div','locked'); var ul = el('ul');
-  CARD_PROMISE.forEach(function(t){ var li = el('li'); li.textContent = t; ul.appendChild(li); });
-  lk.appendChild(ul); body.appendChild(lk);
-
-  body.appendChild(messengerBlock(payload,
-    'Куда прислать маршрутную карту?',
-    'Придёт в течение минуты. Это образовательный материал, он не заменяет консультацию врача.'));
-
-  var d = el('p','disc');
-  d.textContent = 'Это образовательный материал для самонаблюдения. Он не устанавливает диагноз, не назначает лечение и не заменяет консультацию врача и обследование.';
-  body.appendChild(d);
-
-  fillDev(profile, group, lvl, 'OK', payload);
-  show('s-result');
+  if(EMBED){ setInterval(postHeight, 700); }
 }
 
-function renderSafetyStop(body, payload){
-  var tag = el('span','profile-tag');
-  tag.style.background = '#FBEDEF'; tag.style.color = '#6E2C4D';
-  tag.textContent = 'Важно';
-  var h = el('h2','rt'); h.textContent = 'Сначала — безопасность';
-  body.appendChild(tag); body.appendChild(h);
-
-  body.appendChild(alertBox('stop','Продающий результат мы вам не покажем',
-    'По одному из ваших ответов сейчас нужна очная медицинская оценка. Эта карта не предназначена для диагностики, поэтому мы не будем направлять вас в практическую программу до консультации — это было бы неправильно.'));
-
-  body.appendChild(sect('Что стоит сделать'));
-  var p = el('p'); p.style.margin = '0';
-  p.textContent = 'Записаться к врачу и описать симптом так, как вы описали его здесь. Если симптом усиливается, есть боль или обильное кровотечение — не откладывайте визит.';
-  body.appendChild(p);
-
-  body.appendChild(sect('Чем мы можем помочь прямо сейчас'));
-  var p2 = el('p'); p2.style.margin = '0 0 18px';
-  p2.textContent = 'Если хотите, мы пришлём материал о том, как подготовиться к этому приёму: какие наблюдения записать и какие вопросы задать. Это бесплатно и ни к чему не обязывает.';
-  body.appendChild(p2);
-
-  body.appendChild(messengerBlock(payload,
-    'Куда прислать материал о подготовке к приёму?',
-    'Бесплатно и ни к чему не обязывает.'));
-
-  var d = el('p','disc');
-  d.textContent = 'Эта ветка не является продающей и не учитывается в конверсию воронки. Доля таких ответов — отдельная метрика качества входящего трафика. Бот по этому payload не запускает продающую цепочку.';
-  body.appendChild(d);
-}
-
-function sect(t){ var h = el('h3','rs'); h.textContent = t; return h; }
-
-function alertBox(kind, title, text){
-  var a = el('div','alert ' + kind);
-  var b = el('b'); b.textContent = title;
-  var s = el('span'); s.textContent = text;
-  a.appendChild(b); a.appendChild(s);
-  return a;
-}
-
-/* ---------------- ПАНЕЛЬ ДЛЯ КОМАНДЫ ---------------- */
-function fillDev(profile, group, lvl, status, payload){
-  var rows = [
-    ['SESSION', SESSION],
-    ['PAYLOAD', payload + '  (' + payload.length + ' симв.)'],
-    ['link → Telegram', BOTS.tg.url(payload)],
-    ['link → ВКонтакте', BOTS.vk.url(payload)],
-    ['link → MAX', BOTS.max.url(payload)],
-    ['AGE_STAGE', answers.AGE_STAGE],
-    ['PRIMARY', answers.PRIMARY],
-    ['SIGNAL', (answers.SIGNAL||[]).join(' · ')],
-    ['IMPACT', String(QUESTIONS[3].opts.indexOf(answers.IMPACT))],
-    ['SYSTEM_NEED', answers.SYSTEM_NEED],
-    ['INTENT', answers.INTENT],
-    ['LIMITS', (answers.LIMITS||[]).join(' · ')],
-    ['SAFETY', answers.SAFETY === 'Да' ? 'yes' : (answers.SAFETY === 'Не уверена' ? 'uncertain' : 'no')],
-    ['DESIRED', answers.DESIRED],
-    ['PROFILE', profile],
-    ['CARD_GROUP', ({A:'А (переход и ресурс)', B:'Б (опора и комфорт)', C:'В (система и движение)'})[group]],
-    ['CARD_EDITION', lvl === 'high' ? 'осторожная' : (lvl === 'mild' ? 'с примечанием' : 'обычная')],
-    ['OFFER_NEXT', status === 'STOP' ? 'медицинская маршрутизация' : 'маршрутная карта → прогрев → вебинар'],
-    ['BRANCH', answers.INTENT === 'Я уже давно лечусь и ищу, чем дополнить' ? 'давно лечусь' : 'основная']
-  ];
-  var t = $('devtable'); t.innerHTML = '';
-  rows.forEach(function(r){
-    var tr = el('tr');
-    var a = el('td'); a.textContent = r[0];
-    var b = el('td'); b.textContent = r[1] || '—';
-    tr.appendChild(a); tr.appendChild(b); t.appendChild(tr);
-  });
-}
-
-/* ---------------- СОБЫТИЯ ---------------- */
-$('start').addEventListener('click', function(){
-  idx = 0; answers = {}; SESSION = newSession();
-  track('quiz_start', { session:SESSION });
-  buildProgress(); render(); show('s-quiz');
-});
-$('next').addEventListener('click', goNext);
-$('back').addEventListener('click', function(){ if(idx > 0){ idx--; render(); } });
-$('restart').addEventListener('click', function(){
-  answers = {}; idx = 0; $('dev').classList.remove('on');
-  $('devtoggle').textContent = 'Показать данные для CRM';
-  show('s-intro');
-});
-$('devtoggle').addEventListener('click', function(){
-  var d = $('dev'); d.classList.toggle('on');
-  this.textContent = d.classList.contains('on') ? 'Скрыть данные для CRM' : 'Показать данные для CRM';
-});
-
-buildProgress();
+init();
 })();
 </script>
 </body>

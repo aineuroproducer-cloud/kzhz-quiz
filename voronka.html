@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Воронка 40+ · версия под холодный трафик и органику</title>
+<style>
+:root{
+  color-scheme: light;
+  --bg:#FCFAF6; --surface:#FFFFFF;
+  --rose:#E7B7B5; --rose-bg:#FBF1EF; --rose-line:#E4D5D2; --rose-deep:#C97B84;
+  --bordeaux:#6E2C4D; --bordeaux-dark:#4E1E37;
+  --sage:#6E8E7B; --sage-bg:#E9F0EB; --sage-line:#D3E0D6;
+  --ink:#3A2E33; --muted:#6A5A60; --gold:#C29A4B; --gold-bg:#FDF3E7;
+  --stop-bg:#FBEDEF; --radius:14px;
+  --shadow:0 1px 2px rgba(78,30,55,.05), 0 8px 24px rgba(78,30,55,.07);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.flag{background:var(--bordeaux-dark);color:#fff;font-size:12.5px;text-align:center;padding:8px 16px;line-height:1.45}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px 70px}
+header.top{padding:26px 0 6px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage);font-weight:700}
+h1{font-size:26px;line-height:1.24;margin:8px 0 7px;color:var(--bordeaux-dark);letter-spacing:-.012em}
+.sub{color:var(--muted);font-size:15.5px;margin:0 0 20px;max-width:76ch}
+
+.branches{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.bch{border:1.5px solid var(--rose-line);background:var(--surface);color:var(--ink);
+  border-radius:11px;padding:11px 15px;font:inherit;font-size:14.5px;cursor:pointer;
+  transition:all .16s ease;text-align:left;line-height:1.3}
+.bch b{display:block;font-weight:650;margin-bottom:2px}
+.bch span{font-size:12.5px;color:var(--muted)}
+.bch:hover{border-color:var(--rose);background:var(--rose-bg)}
+.bch.on{border-color:var(--bordeaux);background:var(--rose-bg);box-shadow:inset 3px 0 0 var(--bordeaux)}
+.bch.on span{color:var(--bordeaux)}
+
+.rail{display:flex;gap:4px;margin:18px 0 6px;flex-wrap:wrap}
+.rail i{height:5px;flex:1;min-width:10px;border-radius:3px;background:var(--rose-line);transition:background .25s}
+.rail i.done{background:var(--rose-deep)}
+.rail i.now{background:var(--bordeaux)}
+.stepline{font-size:13px;color:var(--muted);margin-bottom:18px}
+
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 352px;gap:22px;align-items:start}
+.phone{background:var(--surface);border:1px solid var(--rose-line);border-radius:18px;
+  box-shadow:var(--shadow);overflow:hidden}
+.phone-bar{background:var(--bordeaux);color:#fff;padding:12px 18px;font-size:14px;
+  display:flex;align-items:center;gap:10px}
+.dot{width:26px;height:26px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 32% 30%, var(--rose) 0%, var(--rose-deep) 55%, #fff0 100%)}
+.phone-bar b{font-weight:600;font-size:14.5px}
+.phone-bar em{font-style:normal;opacity:.78;font-size:12px;display:block;margin-top:1px}
+.stream{padding:18px;min-height:330px;background:var(--bg)}
+.daytag{text-align:center;font-size:12px;color:var(--muted);margin:0 0 12px;letter-spacing:.03em}
+
+.msg{max-width:89%;margin-bottom:10px;animation:rise .28s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg .body{background:var(--surface);border:1px solid var(--rose-line);border-radius:4px 14px 14px 14px;
+  padding:13px 16px;font-size:15.5px;line-height:1.55}
+.msg.me{margin-left:auto}
+.msg.me .body{background:var(--rose-bg);border-color:var(--rose);border-radius:14px 4px 14px 14px}
+.msg .body p{margin:0 0 10px}
+.msg .body p:last-child{margin-bottom:0}
+.msg .body strong{color:var(--bordeaux-dark)}
+.voice{display:flex;align-items:center;gap:11px;background:var(--surface);border:1px solid var(--rose-line);
+  border-radius:4px 14px 14px 14px;padding:13px 16px;max-width:89%;margin-bottom:10px}
+.voice .pl{width:34px;height:34px;border-radius:50%;background:var(--bordeaux);color:#fff;flex:none;
+  display:flex;align-items:center;justify-content:center;font-size:13px}
+.voice .wv{flex:1;height:22px;background:repeating-linear-gradient(90deg,var(--rose) 0 2px,transparent 2px 5px);
+  opacity:.75;border-radius:3px}
+.voice em{font-style:normal;font-size:12.5px;color:var(--muted);flex:none}
+
+.doc{border-left:4px solid var(--rose-deep);background:var(--rose-bg);border-radius:0 12px 12px 0;padding:0}
+.doc-h{padding:14px 18px 2px;font-weight:650;color:var(--bordeaux-dark);font-size:15.5px}
+.doc-b{padding:0 18px 16px;font-size:14.5px;line-height:1.6;max-height:280px;overflow:auto}
+.doc-b h4{margin:15px 0 5px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--bordeaux)}
+.doc-b p{margin:0 0 9px}
+.doc-b ol,.doc-b ul{margin:0 0 9px;padding-left:20px}
+.doc-b li{margin-bottom:5px}
+
+.screen{border:1.5px solid var(--rose-line);background:var(--surface);border-radius:12px;padding:18px;margin-bottom:10px}
+.screen .tg{display:inline-block;background:var(--sage-bg);color:var(--sage);font-size:11px;letter-spacing:.11em;
+  text-transform:uppercase;font-weight:700;padding:5px 11px;border-radius:99px;margin-bottom:10px}
+.screen h3{margin:0 0 10px;font-size:19.5px;color:var(--bordeaux-dark);line-height:1.26}
+.screen p{margin:0 0 10px;font-size:15px}
+.screen p:last-child{margin-bottom:0}
+.fake-btn{display:block;text-align:center;background:var(--bordeaux);color:#fff;border-radius:10px;
+  padding:13px;font-weight:650;margin-top:12px;font-size:15.5px}
+.fake-btn.alt{background:var(--surface);color:var(--bordeaux);border:1.5px solid var(--bordeaux)}
+.fake-quiet{display:block;text-align:center;color:var(--muted);font-size:13.5px;margin-top:9px;
+  text-decoration:underline;text-underline-offset:3px}
+.deal{border-top:1px solid #F1E8E6;border-bottom:1px solid #F1E8E6;padding:11px 0;margin:12px 0}
+.deal div{display:flex;gap:9px;font-size:14px;padding:3px 0}
+.deal div i{color:var(--sage);font-style:normal;font-weight:700;flex:none}
+
+.ad{border:1.5px dashed var(--rose-deep);border-radius:12px;background:var(--surface);padding:0;overflow:hidden}
+.ad-h{background:var(--rose-bg);padding:8px 14px;font-size:12px;color:var(--bordeaux);letter-spacing:.06em;text-transform:uppercase;font-weight:700}
+.ad-b{padding:15px 17px}
+.ad-b h4{margin:0 0 8px;font-size:17px;color:var(--bordeaux-dark);line-height:1.3}
+.ad-b p{margin:0 0 9px;font-size:14.5px}
+.serp{border:1px solid var(--rose-line);border-radius:12px;background:var(--surface);padding:14px 16px}
+.serp .u{font-size:12.5px;color:var(--sage);margin-bottom:3px}
+.serp .t{font-size:17px;color:#1a0dab;margin-bottom:4px;line-height:1.3}
+.serp .d{font-size:14px;color:var(--muted)}
+.article{border:1px solid var(--rose-line);border-radius:12px;background:var(--surface);padding:16px 18px}
+.article h4{margin:0 0 9px;font-size:18px;color:var(--bordeaux-dark);line-height:1.3}
+.article p{margin:0 0 9px;font-size:14.5px;color:#4A3C42}
+.article .fade{height:34px;background:linear-gradient(to bottom,#fff0,#fff);margin-top:-34px;position:relative}
+.inline-quiz{border:1.5px solid var(--bordeaux);border-radius:12px;background:var(--rose-bg);padding:14px 16px;margin:14px 0}
+.inline-quiz b{display:block;color:var(--bordeaux-dark);margin-bottom:5px;font-size:15.5px}
+.inline-quiz p{margin:0 0 10px;font-size:14px;color:var(--ink)}
+
+.mkrow{border:1.5px solid var(--rose-line);border-radius:10px;padding:11px 13px;margin-bottom:8px;background:var(--surface)}
+.mkrow .mq{font-size:14.5px;font-weight:600;color:var(--bordeaux-dark);margin-bottom:8px}
+.mkrow .mb{display:flex;gap:6px}
+.mkrow .mb span{flex:1;text-align:center;border:1.5px solid var(--rose-line);border-radius:8px;
+  padding:8px 4px;font-size:13px;color:var(--muted)}
+.mkrow .mb span.on{background:var(--bordeaux);color:#fff;border-color:var(--bordeaux)}
+
+.alert{border-radius:12px;padding:14px 16px;margin:0 0 10px;font-size:14.5px;line-height:1.5}
+.alert b{display:block;margin-bottom:4px;font-size:14px}
+.alert.warn{background:var(--gold-bg);border:1.5px solid var(--gold);color:#6b4e12}
+.alert.stop{background:var(--stop-bg);border:1.5px solid var(--rose-deep);color:var(--bordeaux-dark)}
+.choices{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 2px;justify-content:flex-end}
+.choice{border:1.5px solid var(--rose);background:var(--surface);color:var(--bordeaux);border-radius:11px;
+  padding:10px 14px;font-size:14.5px}
+.forks{display:grid;gap:10px;margin-top:4px}
+.fork{border:1.5px solid var(--rose-line);border-radius:12px;padding:14px 16px;background:var(--surface)}
+.fork h5{margin:0 0 6px;font-size:14px;color:var(--bordeaux-dark)}
+.fork p{margin:0;font-size:14.5px}
+.fork.good{border-color:var(--sage-line);background:var(--sage-bg)}
+.fork.sell{border-color:var(--rose);background:var(--rose-bg)}
+
+.nav{display:flex;gap:10px;align-items:center;padding:14px 18px;border-top:1px solid var(--rose-line);background:var(--surface)}
+.btn{flex:1;border:0;cursor:pointer;font:inherit;font-weight:650;background:var(--bordeaux);color:#fff;
+  padding:14px;border-radius:11px;font-size:16px;transition:background .16s,transform .1s}
+.btn:hover{background:var(--bordeaux-dark)}
+.btn:active{transform:translateY(1px)}
+.btn:disabled{background:var(--rose-line);color:#A2938F;cursor:not-allowed;transform:none}
+.back{background:none;border:0;cursor:pointer;font:inherit;font-size:14.5px;color:var(--muted);
+  padding:12px 6px;text-decoration:underline;text-underline-offset:3px}
+.back:hover{color:var(--bordeaux)}
+
+aside{position:sticky;top:16px;display:grid;gap:12px}
+.panel{background:var(--surface);border:1px solid var(--rose-line);border-radius:var(--radius);padding:16px 17px}
+.panel h4{margin:0 0 11px;font-size:11.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--bordeaux)}
+.kv{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid #F3ECEA;font-size:13.5px}
+.kv:last-child{border-bottom:0}
+.kv span:first-child{color:var(--muted);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px}
+.kv span:last-child{text-align:right;font-weight:600}
+.panel p{margin:0;font-size:14px}
+.panel .who b{color:var(--bordeaux-dark)}
+.metric{background:var(--sage-bg);border:1px solid var(--sage-line);border-radius:var(--radius);padding:14px 16px}
+.metric h4{color:var(--sage);margin-bottom:9px}
+.metric .mname{font-size:15px;font-weight:650;color:#38513F;margin-bottom:5px;line-height:1.35}
+.metric code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:#fff;
+  border:1px solid var(--sage-line);border-radius:5px;padding:1px 5px;color:#38513F}
+.metric p{font-size:13.5px;color:#38513F;margin-top:7px;line-height:1.5}
+.note{background:var(--gold-bg);border:1px solid var(--gold);border-radius:var(--radius);
+  padding:14px 16px;font-size:13.5px;line-height:1.5;color:#6b4e12}
+.note b{display:block;margin-bottom:4px}
+.stat{display:inline-block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+  border-radius:99px;padding:4px 10px;margin-bottom:9px}
+.stat.hyp{background:var(--gold-bg);color:#6b4e12;border:1px solid var(--gold)}
+.stat.code{background:var(--sage-bg);color:var(--sage);border:1px solid var(--sage-line)}
+
+table.m{width:100%;border-collapse:collapse;font-size:14.5px}
+table.m th{text-align:left;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--bordeaux);
+  padding:0 10px 9px 0;border-bottom:1.5px solid var(--rose-line);font-weight:700}
+table.m td{padding:11px 10px 11px 0;border-bottom:1px solid #F3ECEA;vertical-align:top}
+table.m code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;background:var(--rose-bg);
+  border-radius:5px;padding:1px 5px;color:var(--bordeaux)}
+table.m td b{color:var(--bordeaux-dark)}
+
+footer.legend{margin-top:26px;border-top:1px solid var(--rose-line);padding-top:16px;
+  font-size:13.5px;color:var(--muted);line-height:1.65}
+footer.legend b{color:var(--bordeaux-dark)}
+@media (max-width:980px){ .cols{grid-template-columns:1fr} aside{position:static} }
+@media (max-width:520px){ h1{font-size:21px} .msg{max-width:96%} }
+</style>
+</head>
+<body>
+<div class="flag">Прототип для обсуждения. Тексты — черновик и требуют медицинской вычитки Н. К. Бутолиной до публикации. Цены, названия продуктов и адреса ботов — заглушки.</div>
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Код женского здоровья 40+ · воронка v2</div>
+    <h1>Путь женщины от первого касания до покупки</h1>
+    <p class="sub">Отличие от первой версии: воронка начинается не с результата теста, а с рекламы и с поиска — там, где холодная аудитория отваливается. Слева — что видит она. Справа — что уходит в систему, кто отвечает за шаг и какую метрику этот шаг двигает.</p>
+    <div class="branches" id="branches"></div>
+    <div class="rail" id="rail"></div>
+    <div class="stepline" id="stepline"></div>
+  </header>
+  <div class="cols">
+    <main class="phone">
+      <div class="phone-bar">
+        <div class="dot"></div>
+        <div><b id="chanName">ДЗАЖ</b><em id="chan">—</em></div>
+      </div>
+      <div class="stream" id="stream"></div>
+      <div class="nav">
+        <button class="back" id="back">Назад</button>
+        <button class="btn" id="next">Дальше</button>
+      </div>
+    </main>
+    <aside>
+      <div class="metric" id="metricBox"></div>
+      <div class="panel"><h4>Что уходит в систему</h4><div id="crm"></div></div>
+      <div class="panel"><h4>Кто отвечает за этот шаг</h4><p class="who" id="who"></p></div>
+      <div class="note" id="note"></div>
+    </aside>
+  </div>
+  <footer class="legend" id="legend"></footer>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var CARD_B =
+  '<h4>Что у вас складывается</h4>'+
+  '<p>Вы отметили то, что женщины обычно не обсуждают вслух. Из-за этого кажется, что так только у вас. Это не так — и это не та плата за возраст, которую нужно молча принять.</p>'+
+  '<h4>Почему это идёт вместе</h4>'+
+  '<p>Универсальное «делайте упражнения Кегеля» подходит не каждой ситуации. При одних состояниях мышцы нужно учить сокращаться, при других — наоборот расслаблять. Если угадать неправильно, станет хуже. Поэтому начинать стоит не с силы, а с дыхания: оно безопасно в обоих случаях.</p>'+
+  '<h4>Ваш коридор</h4>'+
+  '<p><b>Можно уже сегодня:</b> диафрагмальное дыхание, ходьба в комфортном темпе, режим отхода ко сну.</p>'+
+  '<p><b>С осторожностью:</b> пресс, подъём тяжестей, прыжки и бег — пока вы не знаете свою ситуацию с мышцами.</p>'+
+  '<p><b>Сначала к врачу:</b> кровотечение после года без менструаций, боль, новый быстро нарастающий симптом.</p>'+
+  '<p><b>Чего в этом формате подобрать нельзя:</b> какие именно упражнения нужны вам. Это определяется на осмотре.</p>'+
+  '<h4>Первые 14 дней</h4>'+
+  '<ol><li>Вечером лечь на спину, согнуть колени, ладонь на живот. Дышать 5 минут так, чтобы поднимался живот. Ничего не сжимать.</li>'+
+  '<li>Выбрать время отбоя и ложиться в одно и то же время.</li></ol>'+
+  '<p>Всё. Больше ничего не добавляйте — сейчас важнее регулярность, чем объём.</p>'+
+  '<h4>Ваши три маркера</h4>'+
+  '<p>Вы отметили их на сайте. Через 14 дней я пришлю их обратно, и будет видно, что сдвинулось.</p>'+
+  '<h4>Важно</h4>'+
+  '<p>Образовательный материал для самонаблюдения. Не устанавливает диагноз, не назначает лечение и не заменяет консультацию врача.</p>';
+
+var CARD_PREP =
+  '<h4>Как подготовиться к приёму</h4>'+
+  '<p>Запишите за 3–5 дней до визита:</p>'+
+  '<ol><li>Когда симптом появился впервые и как менялся.</li><li>Как часто и в какое время суток.</li>'+
+  '<li>Что усиливает и что облегчает.</li><li>Лекарства и добавки — списком.</li>'+
+  '<li>Была ли гормональная терапия и когда.</li></ol>'+
+  '<h4>Что спросить у врача</h4>'+
+  '<ol><li>Какие обследования нужны именно в моём случае и в каком порядке.</li>'+
+  '<li>Что из моих симптомов требует контроля по срокам.</li>'+
+  '<li>Можно ли мне физическую нагрузку и какая противопоказана.</li></ol>'+
+  '<p>Этот список не заменяет приём. Он нужен, чтобы за 15 минут в кабинете вы успели сказать главное.</p>';
+
+var MK3 = [
+  { q:'Срочные позывы в туалет днём', lv:['Часто','Иногда','Почти нет'], on:0 },
+  { q:'Ощущение опоры внизу живота',  lv:['Его нет','Иногда есть','Есть'], on:1 },
+  { q:'Ночные просыпания',            lv:['Каждую ночь','Иногда','Почти нет'], on:0 }
+];
+
+var BRANCHES = {
+  paid: { label:'Платный холодный трафик', hint:'реклама → вход → квиз → бот', steps:[
+
+    { day:'Касание 1 · объявление', chanName:'VK / Яндекс', chan:'рекламная выдача', status:'hyp',
+      metric:{ name:'CTR объявления и цена визита', ev:'вне сайта · Метрика: визиты по utm',
+               note:'Единственный шаг, который не измеряется кодом квиза. Сравнивать креативы между собой, а не с чужими бенчмарками.' },
+      who:'<b>Маркетолог</b> — креативы. <b>Юрист</b> — чтобы не было обещаний результата и признаков рекламы медуслуг.',
+      note:'На холодном трафике не работает «решим вашу проблему»: она это слышала. Работает «объясним, почему прошлое не сработало» — потому что это единственное обещание, которое мы реально выполняем за две минуты.',
+      crm:[['utm_source','vk'],['utm_campaign','pelvic_kegel_01'],['CONTACT','нет'],['SESSION','ещё не создана']],
+      blocks:[ {t:'ad', label:'Объявление', h:'Делали упражнения Кегеля — и не помогло?',
+                p:'Возможно, они вам просто не подходили: при перенапряжённых мышцах они делают хуже, а не лучше. Тест на 9 вопросов покажет, с чего безопасно начинать именно вам.',
+                btn:'Пройти тест · 2 минуты, без регистрации'} ]},
+
+    { day:'Касание 2 · экран входа', chanName:'Сайт', chan:'страница теста', status:'code',
+      metric:{ name:'Число №1: дошла → начала тест', ev:'quiz_view → quiz_start',
+               note:'Главная цифра холодного трафика. Отраслевого ориентира, которому можно верить, нет: первые 300 визитов задают базу, дальше сравниваемся только с собой.' },
+      who:'<b>Копирайтер</b> — заголовок. <b>НК</b> — утверждает формулировки. <b>Техспециалист</b> — страница, метки, частичные сохранения.',
+      note:'Три строки на входе закрывают три страха холодной аудитории: сколько это займёт, попросят ли контакт, не навредят ли. Контакт здесь не спрашивается вообще — это и есть обещание, которое поднимает вход в тест.',
+      crm:[['SESSION','создана'],['src / utm','записаны'],['CONTACT','нет'],['quiz_view','отправлено']],
+      blocks:[ {t:'screen', tg:'Экран входа', h:'Если практики из интернета вам не помогли — скорее всего, дело не в вас',
+                p:'Одни и те же упражнения при разных состояниях дают разный результат. Самый известный пример — Кегель: при слабых мышцах помогает, при перенапряжённых делает хуже. <b>Поэтому порядок действий важнее самих действий.</b>',
+                deal:['9 вопросов, около 2 минут','Без регистрации. Результат — сразу на этой же странице','Отдельная проверка безопасности: если ответ тревожный, программу не покажем'],
+                trust:'<b>Наталья Бутолина</b> · врач-гинеколог, специализация и стаж — заглушка',
+                btn:'Начать · 2 минуты'} ]},
+
+    { day:'Касание 3 · вопросы 1–3', chanName:'Сайт', chan:'общая часть теста', status:'code',
+      metric:{ name:'Отвал по каждому вопросу', ev:'quiz_q_answer · параметр q',
+               note:'Видно не «сколько отвалилось», а на каком именно вопросе. Это разница между «переписать квиз» и «переписать один вопрос».' },
+      who:'<b>НК</b> — формулировки вопросов. <b>Техспециалист</b> — сохранение после каждого ответа.',
+      note:'Первые три вопроса намеренно безобидные: возрастной этап, что беспокоит, что изменилось. Ни одного интимного. Интимное начинается только после того, как мы ей что-то дали.',
+      crm:[['AGE_STAGE','46–55'],['PRIMARY','Тазовое дно'],['SIGNAL','таз, сон'],['partial','сохранено']],
+      blocks:[ {t:'screen', tg:'Вопрос 2 из 9 · общая часть', h:'Что беспокоит сильнее всего?',
+                p:'<i>Приливы и цикл · Сон и энергия · <b>Тазовое дно и мочеиспускание</b> · Интимный комфорт · Движение и скованность · Несколько тем сразу · В целом чувствую себя хорошо</i>'},
+               {t:'alert', kind:'warn', b:'Чего здесь нет', p:'Ни одного вопроса про операции, кровотечения и пролапс. Они будут — но после микро-результата.'} ]},
+
+    { day:'Касание 4 · микро-результат', chanName:'Сайт', chan:'бесплатная польза', status:'code',
+      metric:{ name:'Число №2a: микро → пошла уточнять', ev:'quiz_micro → quiz_deep_start',
+               note:'Это цена интимных вопросов, выраженная в процентах. Если число низкое — усиливать объяснение «зачем», а не выбрасывать вопросы.' },
+      who:'<b>НК</b> — практика и её безопасность. <b>Копирайтер</b> — переход к уточняющей части.',
+      note:'Главное изменение против первой версии. Это плата женщине за то, что она пойдёт в интимные вопросы. Если убрать этот экран, дальше идут только самые мотивированные — то есть фактически тёплые. На холодном трафике именно здесь воронка либо начинается, либо заканчивается.',
+      crm:[['MICRO','показан'],['PROFILE_PRE','B'],['CONTACT','нет'],['quiz_micro','отправлено']],
+      blocks:[ {t:'screen', tg:'Предварительно, по трём ответам', h:'Похоже на тему опоры и комфорта',
+                p:'По первым ответам вперёд вышло то, что женщины обычно не обсуждают вслух — и из-за этого кажется, что так только у вас. Это не так.',
+                todo:{b:'Что можно сделать уже сегодня', p:'Лягте на спину, согните колени, ладонь на живот. Подышите 5 минут так, чтобы поднимался живот, а не грудная клетка. Ничего не сжимая. Это безопасно и при слабых, и при перенапряжённых мышцах — в отличие от Кегеля.'},
+                gate:{b:'Дальше — 6 вопросов, и они другие', p:'Они про ограничения и самочувствие. Нужны для одного: чтобы не дать вам то, что в вашем случае может навредить. Контакты мы не спрашиваем, результат остаётся на этой странице.'},
+                btn:'Уточнить под меня · 6 вопросов', quiet:'Мне пока хватит этого'} ]},
+
+    { day:'Касание 5 · вопросы 4–9', chanName:'Сайт', chan:'уточнение под неё', status:'code',
+      metric:{ name:'Отвал на LIMITS и SAFETY', ev:'quiz_q_answer · q=LIMITS, q=SAFETY',
+               note:'Два самых дорогих вопроса воронки. Если отвал именно здесь — проблема в объяснении, которое стоит перед вопросом.' },
+      who:'<b>НК</b> — что именно заменяется при каких ограничениях. <b>Юрист</b> — формулировка вопроса о безопасности.',
+      note:'Перед обоими вопросами стоит объяснение «зачем». Это не вежливость: без него вопрос про кровотечение от незнакомого бренда читается как сбор данных, а не как забота.',
+      crm:[['IMPACT','Регулярно мешает'],['LIMITS','Ограничений нет'],['SAFETY','no'],['EDITION','обычная']],
+      blocks:[ {t:'screen', tg:'Вопрос 8 из 9 · уточнение', h:'Есть ли сейчас необычное кровотечение после 12 месяцев без менструаций — либо другой новый симптом, который быстро усиливается?',
+                why:{b:'Это вопрос про безопасность, а не про продажу', p:'Если ответ «да» или «не уверена», мы не покажем вам практическую программу. Вместо неё дадим материал о подготовке к приёму врача. Это единственный вопрос, который может отменить всё остальное.'},
+                p:'<i>Да · Нет · Не уверена</i>'} ]},
+
+    { day:'Касание 6 · результат и замер', chanName:'Сайт', chan:'страница результата', status:'code',
+      metric:{ name:'Число №2: начала → дошла до результата', ev:'quiz_start → quiz_complete, затем quiz_markers',
+               note:'quiz_markers отдельно: если замер делают редко, день 14 не сработает и его придётся переносить в бота.' },
+      who:'<b>НК</b> — маркеры под каждый профиль. <b>Техспециалист</b> — сохранение замера до получения контакта.',
+      note:'Замер трёх маркеров делается здесь, на сайте, ещё до бота. Поэтому день 14 работает, даже если она не завела заметку в телефоне — и даже если в бота она вообще не пойдёт. В первой версии весь день 14 висел на её дисциплине.',
+      crm:[['PROFILE','B · опора и комфорт'],['EDITION','обычная'],['MK_BASE','2 / 1 / 0'],['CONTACT','ещё нет']],
+      blocks:[ {t:'screen', tg:'Ваш профиль', h:'Опора и комфорт',
+                p:'Такие изменения после 40 очень распространены — и при этом они не обязательное следствие возраста или родов.'},
+               {t:'mk', h:'Отметьте, как дела сейчас', sub:'Пятнадцать секунд. Через 14 дней пришлём эти же три вопроса с вашими сегодняшними ответами.'} ]},
+
+    { day:'Касание 7 · выбор канала', chanName:'Сайт', chan:'здесь появляется контакт', status:'code',
+      metric:{ name:'Число №3: результат → мессенджер', ev:'quiz_complete → quiz_cta_tg / _vk / _max',
+               note:'Разбивка по каналам показывает, какой мессенджер этой аудитории реально нужен. Доля quiz_print — размер сегмента, который контакт не отдаёт вообще.' },
+      who:'<b>Маркетолог</b> — тексты кнопок. <b>Владелец</b> — решает, оставлять ли «забрать без мессенджера».',
+      note:'Контакт появляется только здесь: не формой до результата, а входом в мессенджер — она уже увидела пользу и знает, за чем идёт. Три канала равнозначны осознанно: у части аудитории 46–65 телеграма просто нет, и один TG отсекает их на самом дорогом шаге.',
+      crm:[['CONTACT','получен'],['CHANNEL','tg / vk / max'],['payload','17 симв., [0-9a-z]'],['SESSION','склеена с лидом']],
+      blocks:[ {t:'screen', tg:'Полная карта', h:'Выберите, где вам удобнее читать',
+                p:'В карте: коридор безопасности, практический минимум на 14 дней под ваши ответы и три маркера для проверки.',
+                btns:['Получить карту в Telegram','Получить карту в ВКонтакте','Получить карту в MAX'],
+                quiet:'Забрать карту без мессенджера — распечатать или сохранить в PDF'} ]},
+
+    { day:'День 0 · первое касание в боте', chanName:'ДЗАЖ · помощник', chan:'бот · выдача карты', status:'hyp',
+      metric:{ name:'Доставка карты и прослушивание голосового', ev:'bot: CARD_SENT, VOICE_LISTENED',
+               note:'Прослушивание голосового — лучший ранний предиктор того, дойдёт ли она до дня 14. Его стоит писать в переменные клиента с первого дня.' },
+      who:'<b>НК</b> — голосовое и медицинская часть. <b>Копирайтер</b> — текст выдачи. <b>Техспециалист</b> — склейка по payload.',
+      note:'Здесь НК впервые становится человеком, а не «помощником школы». На холодном трафике это главный актив воронки: доверие к ней, а не к механике. Сорок секунд её голосом дают больше, чем пять дней текста от безымянного бота.',
+      crm:[['CARD_SENT','да'],['EDITION','обычная'],['RECHECK_DATE','+14 дней'],['MK_BASE','перенесён из квиза']],
+      blocks:[ {t:'bot', p:['Здравствуйте! Ваш разбор готов — он ниже, читается за четыре минуты. Практики подобраны с учётом того, что вы отметили.']},
+               {t:'voice', who:'Наталья Бутолина', len:'0:41'},
+               {t:'doc', h:'Первые 14 дней. Ваш коридор.', b:CARD_B},
+               {t:'me', p:['Спасибо, прочитаю']} ]},
+
+    { day:'Дни 1–4 · прогрев', chanName:'ДЗАЖ · помощник', chan:'бот · четыре касания', status:'hyp',
+      metric:{ name:'Дочитываемость по дням', ev:'bot: TOUCH_1..4, OPENED',
+               note:'Первый день, где падение больше остальных, и есть реальная тема возражения — её выносить в рекламу и в статью.' },
+      who:'<b>Копирайтер</b> — тексты. <b>НК</b> — подтверждает медицинскую часть. <b>Юрист</b> — отсутствие обещаний результата.',
+      note:'Задача прогрева не продать, а объяснить, почему прошлые попытки не сработали. Это снимает вину и готовит к мысли, что тактику надо подбирать, а не угадывать.',
+      crm:[['TOUCH_1..4','доставлено'],['OBJECTION','всё пробовала / нет времени']],
+      blocks:[ {t:'bot', p:['<b>День 1.</b> Почему «качать» — не всегда правильный ответ. Самая частая ошибка в вашей теме.',
+                            '<b>День 2.</b> Как проверить, что дыхание идёт правильно. Одна ладонь на живот, вторая на рёбра.',
+                            '<b>День 3.</b> Что обычно меняется за две недели и чего ждать не стоит. Без обещаний и без историй излечения.',
+                            '<b>День 4.</b> Два возражения: «я уже всё пробовала» и «у меня нет времени».']},
+               {t:'me', p:['Я как раз делала Кегеля полгода без толку']} ]},
+
+    { day:'День 7 · первая денежная точка', chanName:'ДЗАЖ · помощник', chan:'бот · низкий чек', status:'hyp',
+      metric:{ name:'Конверсия в первую покупку', ev:'bot: OFFER_1, PAID_1',
+               note:'Нужна, чтобы холодный трафик окупался раньше дня 14. Если эта точка не работает — считать воронку по дню 14, но знать, что окупаемость сдвигается на три недели.' },
+      who:'<b>Владелец</b> — решает, существует ли этот продукт. <b>НК</b> — ведёт встречу. <b>Маркетолог</b> — цена.',
+      note:'Четырнадцать дней без единой денежной точки на холодном трафике — слишком длинно. Но дожимать до замера нечестно и ломает всю конструкцию. Единственный оффер, который ей не противоречит: короткая встреча или скрининг — потому что сама карта говорит, что без осмотра тактику подобрать нельзя. Мы продаём ровно то, чего в карте честно не хватает.',
+      crm:[['OFFER_1','скрининг / короткая встреча'],['PRICE','заглушка'],['PAID_1','да / нет']],
+      blocks:[ {t:'bot', p:['В вашей карте есть одна честная дыра: какие именно мышцы в вашем случае расслаблять, а какие укреплять — по ответам в тесте определить нельзя. Это видно на осмотре.',
+                            'Поэтому есть короткая встреча, где этот вопрос закрывается. <i>[формат, длительность и цена — заглушка]</i>',
+                            'И граница: если за две недели ваши маркеры сдвинутся — встреча вам не нужна, продолжайте сами. Я напишу через неделю и мы посмотрим.']} ]},
+
+    { day:'День 14 · точка правды', chanName:'ДЗАЖ · помощник', chan:'бот · возврат замера', status:'hyp',
+      metric:{ name:'Доля ответивших на возврат', ev:'bot: RECHECK, RECHECK_RESULT',
+               note:'Если отвечает мало — проблема не в дне 14, а в том, что прогрев не довёл. Смотреть вместе с дочитываемостью по дням.' },
+      who:'<b>Техспециалист</b> — отложенное касание и подстановка её замера. <b>Копирайтер</b> — два сообщения и развилка.',
+      note:'Мы показываем ей её же ответы двухнедельной давности. Это одновременно польза и самый сильный момент доверия в воронке: видно, что её слушали, а не вели по сценарию. И это механика продажи: не «купи», а «проверь себя».',
+      crm:[['RECHECK','запрошен'],['MK_BASE','показан ей обратно'],['STATUS','ожидание ответа']],
+      blocks:[ {t:'bot', p:['Две недели прошли. Вот что вы отметили, когда проходили тест:']},
+               {t:'mk', h:'Ваш замер 14 дней назад', sub:'Сравните с тем, что сегодня.'},
+               {t:'bot', p:['Что получилось?']},
+               {t:'choice', opts:['Стало лучше','Частично','Ничего не изменилось']} ]},
+
+    { day:'Развилка', chanName:'ДЗАЖ · помощник', chan:'бот · следующий шаг', status:'hyp',
+      metric:{ name:'Распределение исходов', ev:'bot: RECHECK_RESULT = better / partial / none',
+               note:'Доля «ничего не изменилось» — одновременно сегмент под личный разбор и сигнал о качестве карты. Если она большая, дело в карте, а не в женщинах.' },
+      who:'<b>Маркетолог</b> — продукт под каждый исход. <b>Владелец</b> — решает, есть ли в воронке личный разбор.',
+      note:'Ни один из трёх ответов не ведёт к «купи то же самое ещё раз». Это и есть причина, по которой здесь можно продавать, не выглядя как инфобиз.',
+      crm:[['RECHECK_RESULT','better / partial / none'],['NEXT','по исходу']],
+      blocks:[ {t:'forks', items:[
+                {cls:'good', h:'Стало лучше', p:'Закрепляем. Женский трек клуба — регулярность, а не новый интенсив. Продажа мягкая, доверие уже есть.'},
+                {cls:'', h:'Частично', p:'Показываем, что сдвинулось, а что нет, и почему так бывает. Тематический модуль как следующий шаг.'},
+                {cls:'sell', h:'Ничего не изменилось', p:'Здесь личный разбор уместен и не выглядит впариванием: она сама убедилась, что общего коридора мало. «Нужна не другая мотивация, а понимание, какие мышцы в вашем случае расслаблять, а какие укреплять».'} ]} ]}
+  ]},
+
+  organic: { label:'Органика из блога', hint:'поиск → статья → встроенный квиз', steps:[
+
+    { day:'Касание 1 · поисковый запрос', chanName:'Поиск', chan:'выдача Яндекса', status:'hyp',
+      metric:{ name:'Показы, CTR и позиция', ev:'Вебмастер + Метрика · src=organic',
+               note:'У органики другая экономика: один раз написали — приводит месяцами. Поэтому цена ошибки в статье выше, чем цена ошибки в прогреве.' },
+      who:'<b>Контент / SEO</b> — запросы и статья. <b>НК</b> — медицинская вычитка до публикации.',
+      note:'Органика приходит не на оффер, а на вопрос. К теме она уже не холодная — прочитала полторы тысячи слов. А к бренду холодная полностью. Это противоположная ситуация платному трафику, и поэтому вход в тест для неё должен звучать иначе.',
+      crm:[['src','organic'],['query','тазовое дно после 40'],['CONTACT','нет'],['SESSION','создана на статье']],
+      blocks:[ {t:'serp', u:'site.ru › blog › tazovoe-dno-posle-40', tt:'Тазовое дно после 40: почему упражнения Кегеля помогают не всем',
+                d:'Разбираем, в каких случаях мышцы нужно укреплять, а в каких — расслаблять, и как отличить одно от другого. Врач-гинеколог Наталья Бутолина.'} ]},
+
+    { day:'Касание 2 · статья и встроенный квиз', chanName:'Сайт', chan:'блог · embed=1', status:'code',
+      metric:{ name:'Дочитала → начала тест', ev:'quiz_view (embed=1) → quiz_start',
+               note:'Считается отдельно от платного трафика: в одной цифре они маскируют друг друга. Разбивка идёт по параметрам src и topic.' },
+      who:'<b>Контент</b> — куда ставить врезку. <b>Техспециалист</b> — embed-режим и параметр topic.',
+      note:'Квиз встраивается дважды: после первого смыслового блока, пока интерес на пике, и в конце для дочитавших. Параметр topic приходит из статьи — поэтому второй вопрос у неё предзаполнен, и она его подтверждает, а не отвечает с нуля. Это минус один шаг на самом хрупком участке.',
+      crm:[['topic','pelvic'],['embed','1'],['article','tazovoe-dno-posle-40'],['PRIMARY','предзаполнен']],
+      blocks:[ {t:'article', h:'Тазовое дно после 40: почему Кегель помогает не всем',
+                p:['При одних состояниях мышцы тазового дна ослаблены, при других — наоборот перенапряжены. Внешне жалобы похожи, а тактика противоположная: в первом случае мышцу учат сокращаться, во втором — расслабляться.',
+                   'Именно поэтому универсальный комплекс из интернета у части женщин не даёт результата, а у части ухудшает состояние…']},
+               {t:'iq', b:'Какой случай у вас?', p:'Девять вопросов, две минуты, без регистрации. Покажет, с чего безопасно начинать именно вам — и нет ли в ваших ответах того, с чем сначала нужно к врачу.',
+                btn:'Пройти тест'} ]},
+
+    { day:'Касание 3 · экран входа для органики', chanName:'Сайт', chan:'тот же квиз, другой текст', status:'code',
+      metric:{ name:'Число №1 отдельно для органики', ev:'quiz_view → quiz_start · src=organic',
+               note:'Если у органики этот показатель заметно выше платного — значит, проблема платного в креативе, а не в квизе. Это первое, что надо проверить, если холодный трафик не окупается.' },
+      who:'<b>Копирайтер</b> — вариант заголовка для органики. <b>Техспециалист</b> — переключение по параметру topic.',
+      note:'То же место воронки, другой текст. Хук про Кегель здесь не нужен — она его только что прочитала в статье, и повтор обесценивает. Нужно другое: причина доверять конкретному человеку и обещание, что тест скажет именно про неё, а не про всех.',
+      crm:[['topic','pelvic'],['ENTRY_VARIANT','organic'],['CONTACT','нет']],
+      blocks:[ {t:'screen', tg:'Вы читали про тазовое дно', h:'В статье — общая картина. Тест покажет, что из неё относится к вам',
+                p:'Девять вопросов. На выходе — <b>одно действие, безопасное именно при ваших ответах</b>, и отдельная проверка, нет ли среди них того, с чем сначала нужно к врачу.',
+                deal:['9 вопросов, около 2 минут','Без регистрации, результат сразу на странице','Второй вопрос уже отмечен по теме статьи — только подтвердите'],
+                trust:'<b>Наталья Бутолина</b> · автор статьи, которую вы читали',
+                btn:'Начать · 2 минуты'} ]},
+
+    { day:'Касания 4–6 · совпадают с платным', chanName:'Сайт', chan:'вопросы → микро → результат', status:'code',
+      metric:{ name:'Сквозное сравнение двух воронок', ev:'все события квиза с разбивкой по src',
+               note:'Один и тот же квиз на двух источниках — это бесплатный A/B на входе. Разница в проходимости покажет, что именно ломает платный трафик.' },
+      who:'<b>Техспециалист</b> — разбивка всех событий по src и topic.',
+      note:'Середина маршрута у органики и платного одинаковая: вопросы 1–3, микро-результат, вопросы 4–9, результат с замером. Это сделано сознательно — два разных квиза пришлось бы вычитывать медицински дважды, а разница в поведении всё равно создаётся на входе.',
+      crm:[['PROFILE','B'],['MK_BASE','2 / 1 / 0'],['EDITION','обычная'],['CONTACT','на следующем шаге']],
+      blocks:[ {t:'alert', kind:'warn', b:'Здесь маршруты сходятся', p:'Отличия были только на входе. Дальше — тот же квиз, тот же микро-результат, тот же замер трёх маркеров.'},
+               {t:'screen', tg:'Ваш профиль', h:'Опора и комфорт',
+                p:'Дальше — три кнопки мессенджеров и тихая ссылка «забрать карту без мессенджера», как в платной ветке.'} ]},
+
+    { day:'День 0 и далее · бот', chanName:'ДЗАЖ · помощник', chan:'бот · темп спокойнее', status:'hyp',
+      metric:{ name:'Те же метрики бота, срез по src', ev:'bot: CARD_SENT, TOUCH_n, RECHECK · src=organic',
+               note:'Ожидание: органика отвечает реже, но покупает охотнее — она пришла с вопросом, а не с рекламы. Это гипотеза, её надо проверить, а не принимать на веру.' },
+      who:'<b>Копирайтер</b> — два изменённых сообщения. <b>НК</b> — голосовое то же.',
+      note:'Два отличия от платного. Первое: можно ссылаться на то, что она читала, — это продолжение разговора, а не новый. Второе: никакой срочности и дефицита; она пришла разбираться, и давление здесь ломает ровно то доверие, на котором всё держится.',
+      crm:[['CARD_SENT','да'],['SEQUENCE','organic'],['REF_ARTICLE','tazovoe-dno-posle-40']],
+      blocks:[ {t:'bot', p:['Здравствуйте! Вы читали мою статью про тазовое дно — ваш разбор продолжает её, но уже под ваши ответы.']},
+               {t:'voice', who:'Наталья Бутолина', len:'0:41'},
+               {t:'doc', h:'Первые 14 дней. Ваш коридор.', b:CARD_B} ]},
+
+    { day:'Возврат · через месяц из того же поиска', chanName:'Поиск', chan:'механизм возврата', status:'hyp',
+      metric:{ name:'Возвраты и незаконченные прохождения', ev:'quiz_resume · повторные визиты по src=organic',
+               note:'Доля quiz_resume отвечает на вопрос, нужно ли вообще хранить незаконченное прохождение. Если она близка к нулю — хранение можно упростить.' },
+      who:'<b>SEO</b> — удержание позиций. <b>Техспециалист</b> — срок хранения незаконченного прохождения.',
+      note:'Для органики главный канал возврата — не ретаргет, а тот же запрос: она гуглит снова через месяц и приходит к той же статье. Поэтому незаконченное прохождение хранится семь дней и предлагается продолжить, а статья живёт вечно. В платной ветке на это место встаёт ретаргет.',
+      crm:[['quiz_resume','предложено продолжить'],['SESSION','та же'],['MK_BASE','сохранён']],
+      blocks:[ {t:'screen', tg:'Через месяц, тот же запрос', h:'Продолжить с вопроса 5?',
+                p:'Вы начинали этот тест. Ответы сохранены — можно продолжить с того места, где остановились, или начать заново.',
+                btn:'Продолжить с вопроса 5', quiet:'Начать заново'} ]}
+  ]},
+
+  nobot: { label:'Забрала карту без мессенджера', hint:'сегмент, которого в v1 не было', steps:[
+
+    { day:'Она нажала тихую ссылку', chanName:'Сайт', chan:'печать / PDF', status:'code',
+      metric:{ name:'Доля печати от дошедших до результата', ev:'quiz_print / quiz_complete',
+               note:'Порог, после которого решение пересматривается, владелец задаёт заранее — иначе спор будет про вкусы, а не про цифру.' },
+      who:'<b>Владелец</b> — само наличие этой ссылки. <b>НК</b> — состав печатной карты.',
+      note:'Этот сегмент либо не пользуется мессенджерами, либо не готов отдать контакт незнакомому бренду. Убрать ссылку — значит потерять их полностью и при этом не узнать, сколько их было. Пока ссылка есть, она ещё и снимает страх «сейчас втянут в рассылку», который мешает и тем, кто в итоге в бота заходит.',
+      crm:[['quiz_print','отправлено'],['CONTACT','нет и не будет сейчас'],['PROFILE','B'],['MK_BASE','2 / 1 / 0']],
+      blocks:[ {t:'screen', tg:'Без мессенджера', h:'Карта открыта для печати',
+                p:'Полный текст карты, код прохождения и ссылка на бота — на одном листе. Можно распечатать или сохранить в PDF.'},
+               {t:'doc', h:'Опора и комфорт — первые 14 дней', b:CARD_B} ]},
+
+    { day:'Что мы о ней знаем', chanName:'Релей', chan:'анонимная сессия', status:'code',
+      metric:{ name:'Профили, уходящие без контакта', ev:'релей: события с CONTACT=нет',
+               note:'Если без контакта чаще уходит один конкретный профиль — дело не в страхе мессенджеров, а в том, что именно этому профилю карта не кажется достаточной.' },
+      who:'<b>Техспециалист</b> — анонимные сессии в релее. <b>Маркетолог</b> — чтение срезов.',
+      note:'Контакта нет, но данные есть: профиль, редакция, замер, источник. Это не лид, но это знание о том, какие профили и какие источники чаще не отдают контакт. В первой версии такая женщина не оставляла после себя вообще ничего.',
+      crm:[['SESSION','есть'],['PROFILE','есть'],['MK_BASE','есть'],['CONTACT','нет']],
+      blocks:[ {t:'alert', kind:'warn', b:'Это не потерянный трафик, а неизмеренный',
+                p:'Разница принципиальная: потерянный требует другого оффера, неизмеренный — одной строки в релее.'},
+               {t:'screen', tg:'Срез в релее', h:'По профилям и источникам',
+                p:'Видно, сколько женщин каждого профиля дошло до результата и сколько из них не выбрало ни один мессенджер. Персональных данных в срезе нет.'} ]},
+
+    { day:'Как она возвращается', chanName:'Печатная карта', chan:'единственный канал возврата', status:'hyp',
+      metric:{ name:'Входы в бота по коду из печатной карты', ev:'bot: вход с payload без quiz_cta',
+               note:'Такой вход опознаётся по тому, что в боте payload есть, а события quiz_cta по этой сессии не было. Отдельный сегмент — он приходит уже тёплым.' },
+      who:'<b>Копирайтер</b> — текст на карте. <b>Техспециалист</b> — распознавание входа без CTA.',
+      note:'В печатной карте есть код прохождения и ссылка на бота. Если через две недели ей стало лучше — она возвращается сама, и приходит уже тёплой. Для этого сегмента это единственный механизм возврата, кроме блога, и он стоит одной строки в подвале карты.',
+      crm:[['ENTRY','из печатной карты'],['SESSION','склеена по коду'],['WARMTH','тёплая']],
+      blocks:[ {t:'screen', tg:'Подвал печатной карты', h:'Код прохождения: a7k2m9',
+                p:'Через 14 дней вернитесь к трём маркерам выше. Если захотите сравнить вместе и получить следующий шаг — напишите боту и пришлите этот код.'},
+               {t:'bot', p:['Вижу ваш код. Вы проходили тест 16 дней назад, профиль «Опора и комфорт». Вот что вы отметили тогда — сравним?']} ]}
+  ]},
+
+  stop: { label:'Стоп-сигнал', hint:'маркетинг выключен полностью', steps:[
+
+    { day:'Сайт · сразу после теста', chanName:'Сайт', chan:'страница результата', status:'code',
+      metric:{ name:'Доля стоп-ответов — качество трафика', ev:'quiz_safety_stop / quiz_complete',
+               note:'Самая недооценённая метрика проекта. Если доля высокая — реклама приводит женщин, которым нужен врач, а не практикум. Это сигнал таргетологу, а не копирайтеру.' },
+      who:'<b>НК</b> — формулировки. <b>Техспециалист</b> — жёсткая блокировка продающей ветки.',
+      note:'Продающий экран не показывается вообще. Это единственное место воронки, где маркетинг выключается полностью. В версии v2 добавлено одно: ответ «не уверена» тоже ведёт сюда — по ответам в тесте отличить одно от другого нельзя.',
+      crm:[['SAFETY','yes / не уверена'],['PROFILE','не присваивается'],['OFFER','медицинская маршрутизация'],['В конверсию','не идёт']],
+      blocks:[ {t:'screen', tg:'Важно', h:'Сначала — безопасность',
+                alert:{kind:'stop', b:'Практическую программу мы вам не покажем', p:'По одному из ваших ответов сейчас нужна очная медицинская оценка. Этот тест не предназначен для диагностики, поэтому направлять вас в программу практик до консультации было бы неправильно.'},
+                p:'<b>Что стоит сделать:</b> записаться к врачу и описать симптом так, как вы описали его здесь. Если симптом усиливается, есть боль или обильное кровотечение — не откладывайте визит.',
+                btns:['Материал для врача — в Telegram','Материал для врача — в ВКонтакте','Материал для врача — в MAX'],
+                quiet:'Открыть материал здесь — распечатать или сохранить в PDF'} ]},
+
+    { day:'День 0 · единственная выдача', chanName:'ДЗАЖ · помощник', chan:'бот · без продажи', status:'hyp',
+      metric:{ name:'Получение материала', ev:'bot: PREP_SENT',
+               note:'Прогрев по этому сегменту не запускается вообще. Если он случайно запустится — это инцидент, а не недоработка маркетинга.' },
+      who:'<b>НК</b> — список вопросов врачу. <b>Копирайтер</b> — подача без продажи.',
+      note:'Материал бесплатный и ни к чему не обязывает. Никаких продуктов в этом сообщении нет и быть не должно. Добавлено в v2: тот же материал можно забрать без мессенджера — здесь требовать контакт особенно неуместно.',
+      crm:[['PREP_SENT','да'],['SEQUENCE','прогрев не запускается'],['SALES','заблокированы']],
+      blocks:[ {t:'bot', p:['Здравствуйте. Держите материал о подготовке к приёму — чтобы за пятнадцать минут в кабинете вы успели сказать главное.']},
+               {t:'doc', h:'Как подготовиться к приёму врача', b:CARD_PREP},
+               {t:'me', p:['Спасибо, записалась на четверг']} ]},
+
+    { day:'День 10 · одно касание', chanName:'ДЗАЖ · помощник', chan:'бот · забота, не оффер', status:'hyp',
+      metric:{ name:'Доля дошедших до врача', ev:'bot: FOLLOWUP, DOCTOR_VISITED',
+               note:'Это не маркетинговая метрика, а проверка того, что воронка делает то, что обещала.' },
+      who:'<b>Копирайтер</b> — одно сообщение. <b>Владелец</b> — утверждает, что так и остаётся.',
+      note:'Соблазн дожать здесь максимальный, и именно здесь нельзя. Один заботливый вопрос — и всё.',
+      crm:[['FOLLOWUP','отправлен'],['SALES','заблокированы']],
+      blocks:[ {t:'bot', p:['Получилось дойти до врача?','Если да и срочного ничего не нашли — напишите, и я подберу, с чего вам можно начинать. Если ещё нет — не откладывайте, пожалуйста.']},
+               {t:'choice', opts:['Была, срочного нет','Ещё не дошла']} ]},
+
+    { day:'После · возврат в маршрут', chanName:'ДЗАЖ · помощник', chan:'разблокировка', status:'hyp',
+      metric:{ name:'Возвраты из стоп-ветки', ev:'bot: SAFETY пересмотрен → SEQUENCE запущен',
+               note:'Эти женщины приходят в маршрут с максимальным доверием: их один раз не стали продавать. Конверсию по ним стоит считать отдельно — скорее всего, она лучше средней.' },
+      who:'<b>Владелец</b> — решает, кто и как переводит такого человека обратно.',
+      note:'Только после ответа «была, срочного нет» она возвращается в обычный маршрут и получает карту и прогрев.',
+      crm:[['SAFETY','пересмотрен'],['PROFILE','присваивается'],['SEQUENCE','запускается']],
+      blocks:[ {t:'bot', p:['Хорошо, что сходили. Теперь можно собрать ваш коридор — пришлю разбор, как в обычном маршруте.']} ]}
+  ]}
+};
+
+/* ---- отдельный экран: план измерений, привязанный к событиям в коде квиза ---- */
+var MROWS = [
+  ['Объявление → страница', 'вне сайта', 'Работает ли креатив', 'Менять креатив и обещание, не квиз'],
+  ['Страница → начала тест', 'quiz_view → quiz_start', 'Число №1. Поверила ли она входу', 'Заголовок, три строки обещаний, блок доверия к НК'],
+  ['Вопросы 1–3', 'quiz_q_answer · q', 'На каком вопросе отваливается', 'Переписать конкретный вопрос, а не весь квиз'],
+  ['Микро → уточнение', 'quiz_micro → quiz_deep_start', 'Число №2a. Цена интимных вопросов', 'Усилить объяснение «зачем». Вопросы не убирать'],
+  ['Ушла на микро-результате', 'quiz_early_exit', 'Сколько берут пользу и уходят', 'Это не потеря, а сегмент: им писать в блоге'],
+  ['Начала → результат', 'quiz_start → quiz_complete', 'Число №2. Общая проходимость', 'Смотреть вместе с отвалом по вопросам'],
+  ['Сделала замер', 'quiz_markers', 'Сработает ли день 14', 'Если низко — переносить замер в бота'],
+  ['Результат → мессенджер', 'quiz_complete → quiz_cta_*', 'Число №3. Цена контакта', 'Тексты кнопок, порядок каналов'],
+  ['Какой канал выбрали', 'quiz_cta_tg / _vk / _max', 'Какой мессенджер реально нужен', 'Поднять нужный, лишний убрать'],
+  ['Забрала без мессенджера', 'quiz_print', 'Размер сегмента без контакта', 'Порог решения владелец задаёт заранее'],
+  ['Стоп-сигнал', 'quiz_safety_stop', 'Качество входящего трафика', 'Много — это сигнал таргетологу, не копирайтеру'],
+  ['Вернулась к незаконченному', 'quiz_resume', 'Нужно ли хранить прохождение', 'Близко к нулю — хранение упростить']
+];
+
+BRANCHES.metrics = { label:'План измерений', hint:'какие события уже пишет код', steps:[
+  { day:'Что и чем измеряем', chanName:'Метрика + релей', chan:'события из кода квиза', status:'code',
+    metric:{ name:'Три числа решают всё остальное', ev:'quiz_view → quiz_start → quiz_complete → quiz_cta_*',
+             note:'Пока эти три числа не измерены, спорить про тексты прогрева и цены бессмысленно: неизвестно, доходит ли до них кто-нибудь.' },
+    who:'<b>Техспециалист</b> — цели в Метрике и релей. <b>Маркетолог</b> — читает срезы по src и topic еженедельно.',
+    note:'Все события из левой колонки уже отправляются кодом квиза. Нужно только создать цели с теми же именами в Метрике и поднять релей. Разбивка по src и topic приходит автоматически в параметрах каждого события.',
+    crm:[['Метрика','цели по именам'],['Релей','POST JSON'],['Разбивка','src, topic, embed'],['ПД','не передаются']],
+    blocks:[ {t:'table'} ] }
+]};
+
+/* ==========================================================================
+   РЕНДЕР
+   ========================================================================== */
+var cur = 'paid', idx = 0;
+var $ = function(id){ return document.getElementById(id); };
+var el = function(tag, cls){ var n = document.createElement(tag); if(cls) n.className = cls; return n; };
+
+function renderBranches(){
+  var box = $('branches'); box.innerHTML = '';
+  Object.keys(BRANCHES).forEach(function(k){
+    var b = el('button', 'bch' + (k === cur ? ' on' : ''));
+    b.innerHTML = '<b>' + BRANCHES[k].label + '</b><span>' + BRANCHES[k].hint + '</span>';
+    b.onclick = function(){ cur = k; idx = 0; renderBranches(); render(); };
+    box.appendChild(b);
+  });
+}
+
+function renderRail(){
+  var steps = BRANCHES[cur].steps, r = $('rail'); r.innerHTML = '';
+  for(var i=0;i<steps.length;i++){
+    var s = el('i'); s.className = i < idx ? 'done' : (i === idx ? 'now' : '');
+    r.appendChild(s);
+  }
+  $('stepline').textContent = 'Шаг ' + (idx+1) + ' из ' + steps.length + ' · ' + steps[idx].day;
+}
+
+function bubble(cls, paras){
+  var d = el('div', 'msg' + (cls ? ' ' + cls : ''));
+  var b = el('div', 'body');
+  b.innerHTML = paras.map(function(p){ return '<p>' + p + '</p>'; }).join('');
+  d.appendChild(b); return d;
+}
+
+function screenBlock(bl){
+  var sc = el('div', 'screen');
+  var h = '';
+  if(bl.tg) h += '<span class="tg">' + bl.tg + '</span>';
+  if(bl.h)  h += '<h3>' + bl.h + '</h3>';
+  if(bl.alert) h += '<div class="alert ' + bl.alert.kind + '"><b>' + bl.alert.b + '</b>' + bl.alert.p + '</div>';
+  if(bl.why) h += '<div class="alert warn"><b>' + bl.why.b + '</b>' + bl.why.p + '</div>';
+  if(bl.p)  h += '<p>' + bl.p + '</p>';
+  if(bl.todo) h += '<div class="alert" style="background:var(--rose-bg);border:1.5px solid var(--rose)"><b>' + bl.todo.b + '</b>' + bl.todo.p + '</div>';
+  if(bl.deal){
+    h += '<div class="deal">';
+    bl.deal.forEach(function(d){ h += '<div><i>✓</i><span>' + d + '</span></div>'; });
+    h += '</div>';
+  }
+  if(bl.gate) h += '<div class="alert" style="background:var(--sage-bg);border:1.5px solid var(--sage-line);color:#38513F"><b>' + bl.gate.b + '</b>' + bl.gate.p + '</div>';
+  if(bl.trust) h += '<div class="deal" style="border-bottom:0;padding-bottom:0"><div><span style="font-size:13.5px;color:var(--muted)">' + bl.trust + '</span></div></div>';
+  if(bl.btn) h += '<div class="fake-btn">' + bl.btn + '</div>';
+  if(bl.btns) bl.btns.forEach(function(b, i){ h += '<div class="fake-btn' + (i ? ' alt' : '') + '">' + b + '</div>'; });
+  if(bl.quiet) h += '<span class="fake-quiet">' + bl.quiet + '</span>';
+  sc.innerHTML = h;
+  return sc;
+}
+
+function mkBlock(bl){
+  var w = el('div', 'screen');
+  var h = '<span class="tg">' + (bl.h || 'Замер') + '</span>';
+  if(bl.sub) h += '<p style="font-size:14px;color:var(--muted)">' + bl.sub + '</p>';
+  MK3.forEach(function(m){
+    h += '<div class="mkrow"><div class="mq">' + m.q + '</div><div class="mb">';
+    m.lv.forEach(function(l, j){ h += '<span' + (j === m.on ? ' class="on"' : '') + '>' + l + '</span>'; });
+    h += '</div></div>';
+  });
+  w.innerHTML = h;
+  return w;
+}
+
+function tableBlock(){
+  var w = el('div');
+  var h = '<table class="m"><tr><th>Шаг воронки</th><th>Событие в коде</th><th>Что показывает</th><th>Что делать, если число плохое</th></tr>';
+  MROWS.forEach(function(r){
+    h += '<tr><td><b>' + r[0] + '</b></td><td><code>' + r[1] + '</code></td><td>' + r[2] + '</td><td>' + r[3] + '</td></tr>';
+  });
+  h += '</table>';
+  w.innerHTML = h;
+  return w;
+}
+
+function render(){
+  var step = BRANCHES[cur].steps[idx];
+  var s = $('stream'); s.innerHTML = '';
+  $('chan').textContent = step.chan;
+  $('chanName').textContent = step.chanName;
+
+  var tag = el('div', 'daytag'); tag.textContent = step.day; s.appendChild(tag);
+
+  step.blocks.forEach(function(bl){
+    if(bl.t === 'screen'){ s.appendChild(screenBlock(bl)); }
+    else if(bl.t === 'mk'){ s.appendChild(mkBlock(bl)); }
+    else if(bl.t === 'table'){ s.appendChild(tableBlock()); }
+    else if(bl.t === 'bot'){ s.appendChild(bubble('', bl.p)); }
+    else if(bl.t === 'me'){ s.appendChild(bubble('me', bl.p)); }
+    else if(bl.t === 'voice'){
+      var v = el('div', 'voice');
+      v.innerHTML = '<div class="pl">▶</div><div class="wv"></div><em>' + bl.len + '</em>';
+      var wrapv = el('div');
+      wrapv.appendChild(v);
+      var cap = el('div'); cap.className = 'daytag'; cap.style.textAlign = 'left'; cap.style.margin = '-4px 0 10px 2px';
+      cap.textContent = 'голосовое · ' + bl.who;
+      wrapv.appendChild(cap);
+      s.appendChild(wrapv);
+    }
+    else if(bl.t === 'doc'){
+      var d = el('div', 'msg');
+      d.innerHTML = '<div class="body doc"><div class="doc-h">' + bl.h + '</div><div class="doc-b">' + bl.b + '</div></div>';
+      s.appendChild(d);
+    }
+    else if(bl.t === 'ad'){
+      var a = el('div', 'ad');
+      a.innerHTML = '<div class="ad-h">' + bl.label + '</div><div class="ad-b"><h4>' + bl.h + '</h4><p>' + bl.p + '</p><div class="fake-btn">' + bl.btn + '</div></div>';
+      s.appendChild(a);
+    }
+    else if(bl.t === 'serp'){
+      var sp = el('div', 'serp');
+      sp.innerHTML = '<div class="u">' + bl.u + '</div><div class="t">' + bl.tt + '</div><div class="d">' + bl.d + '</div>';
+      s.appendChild(sp);
+    }
+    else if(bl.t === 'article'){
+      var ar = el('div', 'article');
+      ar.innerHTML = '<h4>' + bl.h + '</h4>' + bl.p.map(function(p){ return '<p>' + p + '</p>'; }).join('');
+      s.appendChild(ar);
+    }
+    else if(bl.t === 'iq'){
+      var iq = el('div', 'inline-quiz');
+      iq.innerHTML = '<b>' + bl.b + '</b><p>' + bl.p + '</p><div class="fake-btn">' + bl.btn + '</div>';
+      s.appendChild(iq);
+    }
+    else if(bl.t === 'alert'){
+      var al = el('div', 'alert ' + bl.kind);
+      al.innerHTML = '<b>' + bl.b + '</b>' + bl.p;
+      s.appendChild(al);
+    }
+    else if(bl.t === 'choice'){
+      var row = el('div', 'choices');
+      bl.opts.forEach(function(o){ var c = el('span', 'choice'); c.textContent = o; row.appendChild(c); });
+      s.appendChild(row);
+    }
+    else if(bl.t === 'forks'){
+      var f = el('div', 'forks');
+      bl.items.forEach(function(it){
+        var x = el('div', 'fork ' + (it.cls || ''));
+        x.innerHTML = '<h5>' + it.h + '</h5><p>' + it.p + '</p>';
+        f.appendChild(x);
+      });
+      s.appendChild(f);
+    }
+  });
+
+  var mb = $('metricBox');
+  mb.innerHTML = '<span class="stat ' + (step.status === 'code' ? 'code' : 'hyp') + '">'
+    + (step.status === 'code' ? 'уже есть в коде' : 'гипотеза · требует решения')
+    + '</span><h4>Какую метрику двигает шаг</h4>'
+    + '<div class="mname">' + step.metric.name + '</div>'
+    + '<code>' + step.metric.ev + '</code>'
+    + '<p>' + step.metric.note + '</p>';
+
+  var c = $('crm'); c.innerHTML = '';
+  step.crm.forEach(function(kv){
+    var r = el('div', 'kv');
+    r.innerHTML = '<span>' + kv[0] + '</span><span>' + kv[1] + '</span>';
+    c.appendChild(r);
+  });
+
+  $('who').innerHTML = step.who;
+  $('note').innerHTML = '<b>Зачем этот шаг</b>' + step.note;
+
+  $('back').style.visibility = idx === 0 ? 'hidden' : 'visible';
+  var last = idx === BRANCHES[cur].steps.length - 1;
+  $('next').disabled = last;
+  $('next').textContent = last ? 'Конец маршрута' : 'Дальше';
+
+  renderRail();
+}
+
+$('next').onclick = function(){ if(idx < BRANCHES[cur].steps.length - 1){ idx++; render(); } };
+$('back').onclick = function(){ if(idx > 0){ idx--; render(); } };
+
+$('legend').innerHTML =
+  '<b>Что здесь настоящее, а что заглушка.</b> Зелёной меткой «уже есть в коде» помечены шаги, которые реализованы в <code>index.html</code>: '
++ 'экраны входа для платного трафика и для органики, три лёгких вопроса, микро-результат, уточняющая часть с объяснениями «зачем», '
++ 'стоп-ветка по ответам «да» и «не уверена», замер трёх маркеров, три кнопки мессенджеров, печать карты, embed-режим для блога, '
++ 'возврат к незаконченному прохождению и все события аналитики из таблицы в разделе «План измерений».<br>'
++ 'Жёлтой меткой «гипотеза» помечено то, что требует вашего решения и ещё не существует: реклама и креативы, сам бот и его сценарий, '
++ 'голосовое от НК, продукт на день 7 с ценой, наличие личного разбора в воронке и формат клуба. '
++ 'Тексты профилей «Переход и ресурс» и «Система и движение» написаны по тому же скелету, что «Опора и комфорт», и так же требуют медицинской вычитки. '
++ 'Проверить любой экран результата можно по ссылке вида <code>index.html?preview=b-caution</code>.';
+
+renderBranches();
+render();
+})();
+</script>
+</body>
+</html>
